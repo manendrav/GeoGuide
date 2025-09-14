@@ -7,7 +7,13 @@ type Location struct {
 
 // Clean response for frontend
 type LocationResponse struct {
-	Address string `json:"address"`
-	City    string `json:"city"`
-	Country string `json:"country"`
+	Lat       float64 `json:"lat"`
+	Lon       float64 `json:"lon"`
+	City      string  `json:"city"`
+	State     string  `json:"state"`
+	StateID   string  `json:"state_code"`
+	Country   string  `json:"country"`
+	CountryID string  `json:"country_code"`
+	Postcode  string  `json:"postcode"`
+	Formatted string  `json:"formatted"`
 }
