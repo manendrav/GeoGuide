@@ -11,11 +11,11 @@ func SetupRoutes(app *fiber.App) {
 		return c.SendString("Service Locator API is running 🚀")
 	})
 
-	// Location APIs
-	app.Post("/userlocation", handlers.GetLocationHandler)
+	// User Location
+	app.Post("/userlocation", handlers.GetUserLocationHandler)
 
-	// Later you can add:
-	// app.Get("/services", handlers.GetNearbyServicesHandler)
+	// Location info
+	app.Post("/location", handlers.GetLocationHandler)
 }
 
 /* 

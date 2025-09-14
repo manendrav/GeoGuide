@@ -1,8 +1,8 @@
 package models
 
 type Location struct {
-	Latitude  string `json:"latitude"`
-	Longitude string `json:"longitude"`
+	Latitude  float64 `json:"lat"`
+	Longitude float64 `json:"lon"`
 }
 
 // Clean response for frontend

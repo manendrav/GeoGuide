@@ -4,47 +4,88 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 
 	models "github.com/Manendrav/geoguide/model"
 )
 
-type GeoapifyResponse struct {
-    Results []models.LocationResponse `json:"results"`
+func GetKey() string {
+	key := os.Getenv("GEOAPIFY_KEY")
+	if key == "" {
+		log.Fatal("KEY is not set")
+	}
+	fmt.Println("Key from env:", key)
+	return key
 }
 
-func GetLocation(lat, lon string) (*models.LocationResponse, error) { // (map[string]interface{}, error) these are return types, map[string]interface{} -> "Keys are strings, but values can be anything."
-	apiKey := os.Getenv("GEOAPIFY_KEY")
-	if apiKey == "" {
-		return nil, fmt.Errorf("key is not defined")
+type GeoapifyResponse struct {
+	Results []models.LocationResponse `json:"results"`
+}
+
+// Function to handle all the API responses
+func ResponseHandler(res *http.Response) (*models.LocationResponse, error) {
+	// Read body
+	data, err := io.ReadAll(res.Body) 	// io.ReadAll reads all bytes from that stream until EOF (end of file). (Because response.Body is a stream of bytes like: [011, 34, 25, ...])
+	if err != nil {
+		return nil, err
 	}
 
+	// Unmarshal JSON
+	var result GeoapifyResponse 		// why i need GeoapifyResponse? the reponse comes something like {"results":[{"lat":...}]} so we need to unmarshal it into a struct that has Results field which is a slice of LocationResponse
+	if err := json.Unmarshal(data, &result); err != nil {
+		return nil, err
+	}
+
+	if len(result.Results) == 0 {
+		return nil, fmt.Errorf("no results are found")
+	}
+
+	response := result.Results[0]
+	return &response, nil
+}
+
+// Get the location detailes based on lat, lon
+func GetLocation(lat, lon float64) (*models.LocationResponse, error) {
+	apiKey := GetKey()
+
 	// Construct URL
-	URL := fmt.Sprintf("https://api.geoapify.com/v1/geocode/reverse?lat=%s&lon=%s&type=postcode&format=json&apiKey=%s", lat, lon, apiKey)
+	URL := fmt.Sprintf("https://api.geoapify.com/v1/geocode/reverse?lat=%f&lon=%f&type=postcode&format=json&apiKey=%s", lat, lon, apiKey)
 
 	// Make request
 	response, err := http.Get(URL)
 	if err != nil {
 		return nil, err
 	}
-	defer response.Body.Close() 				//! Ensure the body is closed after function ends, Otherwise it can lead to memory leaks
+	defer response.Body.Close() 		//! Ensure the body is closed after function ends, Otherwise it can lead to memory leaks
 
-	// fmt.Println("res:", response.Body)     	//* If you can't access data like this, Printing it directly only shows you the Go struct pointer, The actual data is a stream of bytes coming from the network. thats why you need io.ReadAll
-
-	// Read body
-	data, err := io.ReadAll(response.Body) 		// io.ReadAll reads all bytes from that stream until EOF (end of file). (Because response.Body is a stream of bytes like: [011, 34, 25, ...])
+	data, err := ResponseHandler(response)
 	if err != nil {
 		return nil, err
 	}
 
-	// Unmarshal JSON
-	var apiResp GeoapifyResponse							// why i need GeoapifyResponse? the reponse comes something like {"results":[{"lat":...}]} so we need to unmarshal it into a struct that has Results field which is a slice of LocationResponse
-    if err := json.Unmarshal(data, &apiResp); err != nil {
-        return nil, err
-    }
+	return data, nil
+}
 
-    result := apiResp.Results[0]
+// function to get location detailes from location name
+func GetCoordinates(location string) (*models.LocationResponse, error) {
+	apiKey := GetKey()
 
-    return &result, nil
+	// URL
+	URL := fmt.Sprintf("https://api.geoapify.com/v1/geocode/search?text=%s&format=json&apiKey=%s", location, apiKey)
+
+	// Make request
+	response, err := http.Get(URL)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	data, err := ResponseHandler(response)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
 }
