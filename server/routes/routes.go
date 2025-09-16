@@ -16,6 +16,9 @@ func SetupRoutes(app *fiber.App) {
 
 	// Location info
 	app.Post("/location", handlers.GetLocationHandler)
+
+	// autocomplete search
+	app.Post("/addressautocomplete", handlers.AddressAutocompleteHandler)
 }
 
 /* 

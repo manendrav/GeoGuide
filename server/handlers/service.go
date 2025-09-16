@@ -16,7 +16,6 @@ func GetKey() string {
 	if key == "" {
 		log.Fatal("KEY is not set")
 	}
-	fmt.Println("Key from env:", key)
 	return key
 }
 
@@ -88,4 +87,34 @@ func GetCoordinates(location string) (*models.LocationResponse, error) {
 	}
 
 	return data, nil
+}
+
+func GetAutoCompleteAddress(location string) ([]map[string]interface{}, error) {
+	apiKey := GetKey()
+
+	result := struct {
+		Results []map[string]interface{} `json:"results"`
+	}{}
+
+	// Url define
+	URL := fmt.Sprintf("https://api.geoapify.com/v1/geocode/autocomplete?text=%s&format=json&limit=5&apiKey=%s", location, apiKey)
+
+	// get the response
+	res, err := http.Get(URL)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	data, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	// Unmarshal the response
+	if err := json.Unmarshal(data, &result); err != nil {
+		return nil, err
+	}
+
+	return result.Results, nil
 }
