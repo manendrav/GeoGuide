@@ -80,7 +80,6 @@ func AddressAutocompleteHandler(c *fiber.Ctx) error {
 func GetServicesHandler(c *fiber.Ctx) error {
 	// get the params
 	service := c.Params("service")
-	fmt.Println("Servicd;", service)
 
 	location := models.Location{}
 	if err := c.BodyParser(&location); err != nil {
@@ -114,6 +113,31 @@ func GetServiceDetailsHandler(c *fiber.Ctx) error {
 		return c.Status(500).SendString("Error fetching data")
 	}
 
+	// return the response
+	return c.Status(200).JSON(result)
+}
+
+func GetRouteHandler( c *fiber.Ctx) error {
+	// get the params from body
+	params := struct {
+		StartLat float64 `json:"start_lat"`
+		StartLon float64 `json:"start_lon"`
+		EndLat   float64 `json:"end_lat"`
+		EndLon   float64 `json:"end_lon"`
+	}{}
+
+	if err := c.BodyParser(&params); err != nil {
+		fmt.Println(err)
+		return c.Status(400).JSON(fiber.Map{
+			"error": "cannot parse JSON",
+		})
+	}
+
+	// call the service and send params
+	result, err := GetRoute(params.StartLat, params.StartLon, params.EndLat, params.EndLon)
+	if err != nil {
+		return c.Status(500).SendString("Error fetching data")
+	}
 	// return the response
 	return c.Status(200).JSON(result)
 }

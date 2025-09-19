@@ -25,6 +25,9 @@ func SetupRoutes(app *fiber.App) {
 
 	// Get service detailes
 	app.Get("/service/details/:id", handlers.GetServiceDetailsHandler)
+
+	// Get Turn-by-Turn navigation or Directions instructions
+	app.Post("/service/route", handlers.GetRouteHandler)
 }
 
 /* 

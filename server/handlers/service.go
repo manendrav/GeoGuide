@@ -26,13 +26,13 @@ type GeoapifyResponse struct {
 // Function to handle all the API responses
 func ResponseHandler(res *http.Response) (*models.LocationResponse, error) {
 	// Read body
-	data, err := io.ReadAll(res.Body) 	// io.ReadAll reads all bytes from that stream until EOF (end of file). (Because response.Body is a stream of bytes like: [011, 34, 25, ...])
+	data, err := io.ReadAll(res.Body) // io.ReadAll reads all bytes from that stream until EOF (end of file). (Because response.Body is a stream of bytes like: [011, 34, 25, ...])
 	if err != nil {
 		return nil, err
 	}
 
 	// Unmarshal JSON
-	var result GeoapifyResponse 		// why i need GeoapifyResponse? the reponse comes something like {"results":[{"lat":...}]} so we need to unmarshal it into a struct that has Results field which is a slice of LocationResponse
+	var result GeoapifyResponse // why i need GeoapifyResponse? the reponse comes something like {"results":[{"lat":...}]} so we need to unmarshal it into a struct that has Results field which is a slice of LocationResponse
 	if err := json.Unmarshal(data, &result); err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func GetLocation(lat, lon float64) (*models.LocationResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer response.Body.Close() 		//! Ensure the body is closed after function ends, Otherwise it can lead to memory leaks
+	defer response.Body.Close() //! Ensure the body is closed after function ends, Otherwise it can lead to memory leaks
 
 	data, err := ResponseHandler(response)
 	if err != nil {
@@ -125,10 +125,10 @@ func GetServices(lat, lon float64, loc string) ([]map[string]interface{}, error)
 	result := struct {
 		Features []map[string]interface{} `json:"features"`
 	}{}
-	
+
 	// define Url
 	URL := fmt.Sprintf("https://api.geoapify.com/v2/places?categories=%s&filter=circle:%f,%f,5000&bias=proximity:%f,%f&limit=20&apiKey=%s", loc, lon, lat, lon, lat, apiKey)
-	
+
 	// get the response from url
 	response, err := http.Get(URL)
 	if err != nil {
@@ -139,8 +139,8 @@ func GetServices(lat, lon float64, loc string) ([]map[string]interface{}, error)
 	data, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
-	}	
-	
+	}
+
 	// unmarshal the response
 	if err := json.Unmarshal(data, &result); err != nil {
 		return nil, err
@@ -185,4 +185,36 @@ func GetServiceDetails(id string) ([]map[string]interface{}, error) {
 	// return the data
 	return result.Features, nil
 }
-	
+
+func GetRoute(lat1, lon1, lat2, lon2 float64) (map[string]interface{}, error) {
+	apiKey := GetKey()
+	// model the data
+	result := struct {
+		Features []map[string]interface{} `json:"features"`
+	}{}
+
+	// construct URL
+	URL := fmt.Sprintf("https://api.geoapify.com/v1/routing?waypoints=%f,%f|%f,%f&mode=drive&details=instruction_details&apiKey=%s", lat1, lon1, lat2, lon2, apiKey)
+
+	// get the data from API
+	response, err := http.Get(URL)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	data, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	// Unmarshal the response
+	if err := json.Unmarshal(data, &result); err != nil {
+		return nil, err
+	}
+
+	if len(result.Features) == 0 {
+		return nil, err
+	}
+	// return the data
+	return result.Features[0], nil
+}
