@@ -32,8 +32,8 @@ func GetUserLocationHandler(c *fiber.Ctx) error {
 	return c.Status(200).JSON(result)
 }
 
-func GetLocationHandler(c *fiber.Ctx) error {
-	location := struct { // Anonymous struct instantiation
+func GetSearchedLocationHandler(c *fiber.Ctx) error {
+	location := struct { // Anonymous struct instantiation   // another way to do same thing
 		Loc string `json:"loc"`
 	}{}
 
@@ -46,7 +46,7 @@ func GetLocationHandler(c *fiber.Ctx) error {
 
 	encodedLoc := url.QueryEscape(location.Loc)
 
-	result, err := GetCoordinates(encodedLoc)
+	result, err := GetSearchedLocation(encodedLoc)
 	if err != nil {
 		return c.Status(500).SendString("Error fetching the Coordinates")
 	}
@@ -56,25 +56,49 @@ func GetLocationHandler(c *fiber.Ctx) error {
 
 func AddressAutocompleteHandler(c *fiber.Ctx) error {
 	// get loc string from request
-	location := struct { 						
-		Loc string `json:"loc"`
-	}{}
+	location := models.Location{}
 
-	err := c.BodyParser(&location)				//TODO: You have to create request cancel feature too (Fiber doesnt automatically cancle previous request)
+	err := c.BodyParser(&location) //TODO: You have to create request cancel feature too (Fiber doesnt automatically cancle previous request)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"error": "cannot parse JSON",
 		})
 	}
 
-	encodedLoc := url.QueryEscape(location.Loc)
+	encodedLoc := url.QueryEscape(location.Location)
 
 	// send that string to service
 	result, err := GetAutoCompleteAddress(encodedLoc)
 	if err != nil {
 		return c.Status(500).SendString("Error fetching data")
 	}
-	
+
 	// return the response
+	return c.Status(200).JSON(result)
+}
+
+func GetServicesHandler(c *fiber.Ctx) error {
+	// get the params
+	service := c.Params("service")
+	fmt.Println("Servicd;", service)
+
+	location := models.Location{}
+	if err := c.BodyParser(&location); err != nil {
+		fmt.Println(err)
+		return c.Status(400).JSON(fiber.Map{
+			"error": "cannot parse JSON",
+		})
+	}
+
+	lat := location.Latitude
+	lon := location.Longitude
+
+	// Call service
+	result, err := GetService(lat, lon, service)
+	if err != nil {
+		return c.Status(500).SendString("Error fetching data")
+	}
+
+	// Return response
 	return c.Status(200).JSON(result)
 }

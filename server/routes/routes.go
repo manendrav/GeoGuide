@@ -8,17 +8,20 @@ import (
 func SetupRoutes(app *fiber.App) {
 	// Health check
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Service Locator API is running 🚀")
+		return c.SendString("Server is running 🚀")
 	})
 
 	// User Location
 	app.Post("/userlocation", handlers.GetUserLocationHandler)
 
 	// Location info
-	app.Post("/location", handlers.GetLocationHandler)
+	app.Post("/searchedlocation", handlers.GetSearchedLocationHandler)
 
 	// autocomplete search
 	app.Post("/addressautocomplete", handlers.AddressAutocompleteHandler)
+
+	// Get nearby Services detailes 
+	app.Post("/services/:service", handlers.GetServicesHandler)
 }
 
 /* 
@@ -28,7 +31,7 @@ func SetupRoutes(app *fiber.App) {
 
 	-> For autocomplete we can use {/autocomplete/:input} here we send list of locations matching the input
 
-	-> we can show specific service from {/service/:category} here we send all the hospitals nearby under 5 km radius
+	-> we can show specific service from {/service/:category} here we send all the servicces nearby under 5 km radius like hospitals and resturents
 
 	-> Now if user clicks on specific hospital we can show details from {/service/details/:id} here we send all the details of that specific hospital
 

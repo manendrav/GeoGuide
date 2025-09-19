@@ -68,7 +68,7 @@ func GetLocation(lat, lon float64) (*models.LocationResponse, error) {
 }
 
 // function to get location detailes from location name
-func GetCoordinates(location string) (*models.LocationResponse, error) {
+func GetSearchedLocation(location string) (*models.LocationResponse, error) {
 	apiKey := GetKey()
 
 	// URL
@@ -117,4 +117,39 @@ func GetAutoCompleteAddress(location string) ([]map[string]interface{}, error) {
 	}
 
 	return result.Results, nil
+}
+
+func GetService(lat, lon float64, loc string) ([]map[string]interface{}, error) {
+	apiKey := GetKey()
+
+	result := struct {
+		Features []map[string]interface{} `json:"features"`
+	}{}
+	
+	// define Url
+	URL := fmt.Sprintf("https://api.geoapify.com/v2/places?categories=%s&filter=circle:%f,%f,5000&bias=proximity:%f,%f&limit=20&apiKey=%s", loc, lon, lat, lon, lat, apiKey)
+	
+	// get the response from url
+	response, err := http.Get(URL)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	data, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}	
+	
+	// unmarshal the response
+	if err := json.Unmarshal(data, &result); err != nil {
+		return nil, err
+	}
+
+	if len(result.Features) == 0 {
+		return nil, err
+	}
+
+	// return the result
+	return result.Features, nil
 }
