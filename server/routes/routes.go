@@ -22,6 +22,9 @@ func SetupRoutes(app *fiber.App) {
 
 	// Get nearby Services detailes 
 	app.Post("/services/:service", handlers.GetServicesHandler)
+
+	// Get service detailes
+	app.Get("/service/details/:id", handlers.GetServiceDetailsHandler)
 }
 
 /* 

@@ -94,11 +94,26 @@ func GetServicesHandler(c *fiber.Ctx) error {
 	lon := location.Longitude
 
 	// Call service
-	result, err := GetService(lat, lon, service)
+	result, err := GetServices(lat, lon, service)
 	if err != nil {
 		return c.Status(500).SendString("Error fetching data")
 	}
 
 	// Return response
+	return c.Status(200).JSON(result)
+}
+
+func GetServiceDetailsHandler(c *fiber.Ctx) error {
+	// get parameters
+	id := c.Params("id")
+	fmt.Println(id)
+
+	// call the service and send id
+	result, err := GetServiceDetails(id)
+	if err != nil {
+		return c.Status(500).SendString("Error fetching data")
+	}
+
+	// return the response
 	return c.Status(200).JSON(result)
 }

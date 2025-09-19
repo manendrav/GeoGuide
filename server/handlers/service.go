@@ -119,7 +119,7 @@ func GetAutoCompleteAddress(location string) ([]map[string]interface{}, error) {
 	return result.Results, nil
 }
 
-func GetService(lat, lon float64, loc string) ([]map[string]interface{}, error) {
+func GetServices(lat, lon float64, loc string) ([]map[string]interface{}, error) {
 	apiKey := GetKey()
 
 	result := struct {
@@ -153,3 +153,36 @@ func GetService(lat, lon float64, loc string) ([]map[string]interface{}, error) 
 	// return the result
 	return result.Features, nil
 }
+
+func GetServiceDetails(id string) ([]map[string]interface{}, error) {
+	apiKey := GetKey()
+
+	// model the data
+	result := struct {
+		Features []map[string]interface{} `json:"features"`
+	}{}
+
+	// construct URL
+	URL := fmt.Sprintf("https://api.geoapify.com/v2/place-details?id=%s&features=details&apiKey=%s", id, apiKey)
+
+	// get the data from API
+	response, err := http.Get(URL)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	data, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	// Unmarshal the response
+	if err := json.Unmarshal(data, &result); err != nil {
+		return nil, err
+	}
+
+	// return the data
+	return result.Features, nil
+}
+	
