@@ -207,7 +207,7 @@ export default function Home() {
                       we'll get back to you as soon as possible.
                     </p>
                   </div>
-                  <div className="mt-6 flex max-w-md gap-x-4 mx-auto">
+                  <div className="mt-6 flex max-w-md gap-x-4 px-2">
                     <label htmlFor="email-address" className="sr-only">
                       Email address
                     </label>

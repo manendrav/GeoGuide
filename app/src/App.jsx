@@ -18,7 +18,7 @@ function App() {
     <div data-theme="light">
       {contentLoaded ? (
         <div className="bg-img">
-          <nav className="bg-gray-100">
+          <nav className="bg-gray-200">
             <Navbar />
           </nav>
 

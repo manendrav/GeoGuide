@@ -18,7 +18,7 @@ import { GiForkKnifeSpoon, GiCook } from "react-icons/gi";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import { RxCross2 } from "react-icons/rx";
 import { RiHotelFill } from "react-icons/ri";
-import SearchCategory from "../components/searchCategory";
+import SearchCategory from "../components/Search";
 
 export default function Explore() {
 
@@ -155,16 +155,8 @@ export default function Explore() {
 
     return (
         <div className="mapview border-2 p-3">
-            <div className="layer"></div>
-
             <div className="">
                 <div className="flex flex-col min-h-screen">
-                    <div className="max-w-6xl mx-auto flex my-5 items-center h-16 border-b shrink-0 ">
-                        <form className="flex-1 flex gap-3 ml-4 md:ml-auto md:mr-4 lg:mr-6">
-                            <SearchCategory handleSearch={handleSearch} />
-                        </form>
-                    </div>
-                    
                     <main className="flex-1 flex flex-col min-h-[calc(100vh_-_theme(spacing.16))] mt-5">
                         <div className="grid relative gap-4">
 
