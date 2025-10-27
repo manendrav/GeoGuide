@@ -1,12 +1,15 @@
-import { use } from "react";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Map from "../components/Map";
 import UserLocationDetailes from "../components/UserLocationDetailes";
+import { ServiceCategory } from "../components/ServiceCategory";
 
 export default function Explore() {
   const [loading, setLoading] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
+  const [nearbyServices, setNearbyServices] = useState(null);
+
+  console.log("Explore Page Nearby Services:", nearbyServices);
 
   //* ---------> Fetch User from Local Storage <--------- *//
   useEffect(() => {
@@ -67,12 +70,18 @@ export default function Explore() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-1 flex flex-col min-h-[calc(100vh_-_theme(spacing.16))] m-3">
-        <h1 className="text-3xl font-bold text-center mb-4">Categories</h1>
+      <main className="flex-1 flex flex-col min-h-[calc(100vh_-_theme(spacing.16))]">
+        <div className="my-2">
+          <ServiceCategory
+            setNearbyServices={setNearbyServices}
+            location={userLocation}
+          />
+        </div>
+
         <div className="flex flex-col gap-2 md:col-span-2 w-full">
           <div className="grid relative gap-4">
             <div className="flex justify-center items-center rounded-xl z-[0] h-screen overflow-hidden border-2  w-full">
-              <Map location={userLocation} />
+              <Map location={userLocation} nearbyServices={nearbyServices} />
             </div>
           </div>
 

@@ -1,63 +1,80 @@
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { Icon } from "leaflet";
+import serviceMarker from "../../public/loc.svg";
+import myMarker from "../../public/myLoc.png";
+import routeMark from "../../public/routemark.png";
+import LocationDetailes from "./LocationDetailes";
+import toast from "react-hot-toast";
 
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import serviceMarker from '../../public/loc.svg';
-import myMarker from '../../public/myLoc.png';
-import routeMark from '../../public/routemark.png';
-import { Icon } from 'leaflet'
+const Map = ({ location, nearbyServices }) => {
+  if (!location) {
+    return null; // Render nothing if location is not available
+  }
 
-const Map = ({location}) => {
+  const { latitude, longitude } = location || {};
 
-     if (!location) {
-        return null; // Render nothing if location is not available
-    }
+  console.log("Map Component Location:", location);
 
-    const { latitude, longitude } = location || {};
+  const serviceLoc = new Icon({
+    iconUrl: serviceMarker,
+    iconSize: [32, 42],
+  });
 
+  const myIcon = new Icon({
+    iconUrl: myMarker,
+    iconSize: [42, 42],
+  });
 
-    console.log("Map Component Location:", location);
+  const routeIcon = new Icon({
+    iconUrl: routeMark,
+    iconSize: [42, 42],
+  });
 
-    const serviceLoc = new Icon({
-        iconUrl: serviceMarker,
-        iconSize: [32, 42]
-    })
+  const turnByTurnMarkerStyle = {
+    radius: 8,
+    fillColor: "white",
+    color: "red",
+    weight: 0,
+    opacity: 1,
+    fillOpacity: 1,
+  };
 
-    const myIcon = new Icon({
-        iconUrl: myMarker,
-        iconSize: [42, 42]
-    });
+  return (
+    <MapContainer
+      key={`${latitude}-${longitude}`} // Here why i use two time? -> MapContainer component doesn't automatically re-render when its center prop changes.
+      center={[latitude, longitude]}
+      zoom={16}
+      style={{ height: "100%", width: "100%" }}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution=""
+      />
+      {nearbyServices
+        ? Array.isArray(nearbyServices) &&
+          nearbyServices.map((locationData, index) => (
+            <Marker
+              key={index}
+              position={[
+                locationData.geometry.coordinates[1],
+                locationData.geometry.coordinates[0],
+              ]}
+              icon={serviceLoc}
+            >
+              <Popup>
+                <LocationDetailes
+                  locationData={locationData}
+                  //handleLocationID={handleLocationID}
+                />
+              </Popup>
+            </Marker>
+          ))
+        : toast.error("No services found!!!")}
 
-    const routeIcon = new Icon({
-        iconUrl: routeMark,
-        iconSize: [42, 42]
-    });
-
-    const turnByTurnMarkerStyle = {
-        radius: 8,
-        fillColor: "white",
-        color: "red",
-        weight: 0,
-        opacity: 1,
-        fillOpacity: 1
-    };
-
-   
-    return (
-        <MapContainer
-            key={`${latitude}-${longitude}`}                         // Here why i use two time? -> MapContainer component doesn't automatically re-render when its center prop changes.                           
-            center={[latitude, longitude]} 
-            zoom={16}
-            style={{ height: '100%', width: '100%' }}
-        >
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution=''
-            />
-            
-            <Marker position={[latitude, longitude]} icon={myIcon}></Marker>
-            
-        </MapContainer>
-    );
+      <Marker position={[latitude, longitude]} icon={myIcon}></Marker>
+    </MapContainer>
+  );
 };
 
 export default Map;

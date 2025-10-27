@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { userlocation } from "../utils/APIRoutes";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { getUserLocationDetailes } from "../services/locationService";
 
 const UserLocationDetailes = ({ location }) => {
   const [userLocationData, setUserLocationData] = useState(null);
@@ -12,22 +10,23 @@ const UserLocationDetailes = ({ location }) => {
     lon: location?.longitude,
   };
 
-  async function getUserData(location) {
+  //* ---------> Fetch User Location Details <--------- *//
+  async function fetchUserData(location) {
     if (location) {
       try {
-        const response = await axios.post(userlocation, payload);
-        setUserLocationData(response.data);
+        const result = await getUserLocationDetailes(payload);
+        if (result) setUserLocationData(result);
       } catch (error) {
-        console.error("Error occurred:", error);
-        toast.error("Failed to fetch user location data.");
+        console.error("Error fetching user location data:", error);
       }
     }
   }
 
   useEffect(() => {
-    getUserData(location);
+    fetchUserData(location);
   }, [location]);
 
+  //* ---------> Check Geolocation Permission <--------- *//
   useEffect(() => {
     navigator.permissions.query({ name: "geolocation" }).then((result) => {
       setPermission(result.state);

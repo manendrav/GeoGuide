@@ -203,19 +203,11 @@ export default function Explore() {
               <div className="absolute z-10 top-[10%] left-5">
                 <div className="hidden rounded-lg bg-violet-500 text-white lg:block">
                   <div className="flex h-full max-h-screen flex-col">
-                    <div className="flex items-center py-2 justify-center">
-                      <div className="flex items-center font-semibold">
-                        <p>
-                          <CgMenuLeft size={"1.5em"} />
-                        </p>
-                      </div>
-                    </div>
                     <div className="flex-1 py-2">
                       <nav className="grid items-start space-y-2 px-2 text-sm font-medium">
                         <div
                           data-tip="Supermarkets"
                           onClick={() => handleCategory("commercial")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <FaShoppingCart size={"1.5em"} />
@@ -224,7 +216,6 @@ export default function Explore() {
                         <div
                           data-tip="Restaurants"
                           onClick={() => handleCategory("catering")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <IoFastFoodSharp size={"1.5em"} />
@@ -233,7 +224,6 @@ export default function Explore() {
                         <div
                           data-tip="Hotels"
                           onClick={() => handleCategory("accommodation")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <MdLocalHotel size={"1.5em"} />
@@ -242,7 +232,6 @@ export default function Explore() {
                         <div
                           data-tip="Hospitals"
                           onClick={() => handleCategory("healthcare")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <FaHospitalUser size={"1.5em"} />
@@ -251,7 +240,6 @@ export default function Explore() {
                         <div
                           data-tip="Library"
                           onClick={() => handleCategory("education.library")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <IoLibrary size={"1.5em"} />
@@ -260,7 +248,6 @@ export default function Explore() {
                         <div
                           data-tip="Transportation"
                           onClick={() => handleCategory("public_transport")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <FaTrainSubway size={"1.5em"} />
@@ -269,7 +256,6 @@ export default function Explore() {
                         <div
                           data-tip="Entertainment"
                           onClick={() => handleCategory("entertainment")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <FaMasksTheater size={"1.5em"} />
@@ -278,7 +264,6 @@ export default function Explore() {
                         <div
                           data-tip="Banks or ATM"
                           onClick={() => handleCategory("service.financial")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <MdLocalAtm size={"1.5em"} />
@@ -287,7 +272,6 @@ export default function Explore() {
                         <div
                           data-tip="Forest"
                           onClick={() => handleCategory("natural.forest")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <FaTree size={"1.5em"} />
@@ -296,7 +280,6 @@ export default function Explore() {
                         <div
                           data-tip="Parking"
                           onClick={() => handleCategory("parking")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <FaParking size={"1.5em"} />
@@ -305,7 +288,6 @@ export default function Explore() {
                         <div
                           data-tip="Restrooms"
                           onClick={() => handleCategory("amenity.toilet")}
-                          className="tooltip tooltip-right flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
                         >
                           <p>
                             <FaToiletPaper size={"1.5em"} />
