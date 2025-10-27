@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+import Map from "./components/Map";
 
 function App() {
   const [contentLoaded, setContentLoaded] = useState(false);

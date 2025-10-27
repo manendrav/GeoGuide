@@ -1,3 +1,4 @@
-export const host = '';             
-export const registerRoute = `${host}/api/auth/register`;
-export const loginRoute = `${host}/api/auth/login`;
+import conf from "./conf";
+
+export const host = conf.host;             
+export const userlocation = `${host}/api/userlocation`;

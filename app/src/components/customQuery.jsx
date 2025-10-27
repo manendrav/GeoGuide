@@ -44,9 +44,8 @@ export default function customQuery(location, search, locationId, routeCoordinat
                 // //* It gives the user current nearby location details
                 // if (search !== null && search !== undefined && search.length > 0) {
                 //     const response = await axios.get(`https://api.geoapify.com/v2/places?categories=${category}&filter=circle:${longitude},${latitude},5000&bias=proximity:${longitude},${latitude}&limit=40&apiKey=${apikey}`);
-                //     setNearbyLocationData(response.data.features);
-                    
-                // }
+                //     setNearbyLocationData(response.data.features); 
+                // } 
 
                 // //* It gives the location details of the user clicked location
                 // if (locationId !== null && locationId !== undefined) {
