@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Map from "../components/Map";
-import UserLocationDetailes from "../components/UserLocationDetailes";
+import UserLocationDetailes from "../components/UserLocationDetails";
 import { ServiceCategory } from "../components/ServiceCategory";
+import { Sidebar } from "../components/layout/Sidebar";
+import { LocationDetails } from "../components/LocationDetails";
 
 export default function Explore() {
   const [loading, setLoading] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [nearbyServices, setNearbyServices] = useState(null);
+  const [locationData, setLocationData] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  console.log("Explore Page Location Data:", locationData);
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   console.log("Explore Page Nearby Services:", nearbyServices);
 
@@ -81,7 +90,12 @@ export default function Explore() {
         <div className="flex flex-col gap-2 md:col-span-2 w-full">
           <div className="grid relative gap-4">
             <div className="flex justify-center items-center rounded-xl z-[0] h-screen overflow-hidden border-2  w-full">
-              <Map location={userLocation} nearbyServices={nearbyServices} />
+              <Map
+                location={userLocation}
+                nearbyServices={nearbyServices}
+                setLocationData={setLocationData}
+                toggleSidebar={toggleSidebar}
+              />
             </div>
           </div>
 
@@ -89,6 +103,22 @@ export default function Explore() {
           <div>
             <UserLocationDetailes location={userLocation} />
           </div>
+        </div>
+
+        <div>
+          <Sidebar
+            isOpen={isOpen}
+            toggleSidebar={toggleSidebar}
+            title="Details"
+          >
+            {locationData && Object.keys(locationData).length > 0 ? (
+              <LocationDetails locationData={locationData[0].properties} />
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <span className="loader"></span>
+              </div>
+            )}
+          </Sidebar>
         </div>
       </main>
     </div>

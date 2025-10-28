@@ -1,5 +1,7 @@
 import conf from "./conf";
 
-export const host = conf.host;             
+export const host = conf.host;
 export const userlocation = `${host}/api/userlocation`;
-export const serviceRoute = (service) => `${host}/api/services/${service}`;
+export const serviceCategory = (service) => `${host}/api/services/${service}`;
+export const locationDetails = (locationId) =>
+  `${host}/api/service/details/${locationId}`;

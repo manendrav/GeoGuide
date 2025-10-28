@@ -6,7 +6,7 @@ import serviceMarker from '../../public/loc.svg';
 import myMarker from '../../public/myLoc.png';
 import routeMark from '../../public/routemark.png';
 import { Icon, map } from 'leaflet'
-import LocationDetailes from './LocationDetailes';
+import LocationDetailes from './ServiceDetails';
 import L from 'leaflet';
 
 const Map = ({ nearbyLocationData, location, routeData, handleLocationID }) => {

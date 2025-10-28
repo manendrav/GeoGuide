@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserLocationDetailes } from "../services/locationService";
 
-const UserLocationDetailes = ({ location }) => {
+const UserLocationDetails = ({ location }) => {
   const [userLocationData, setUserLocationData] = useState(null);
   const [permission, setPermission] = useState("unknown");
 
@@ -78,4 +78,4 @@ const UserLocationDetailes = ({ location }) => {
   );
 };
 
-export default UserLocationDetailes;
+export default UserLocationDetails;

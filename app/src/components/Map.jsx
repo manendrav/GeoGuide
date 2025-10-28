@@ -4,10 +4,10 @@ import { Icon } from "leaflet";
 import serviceMarker from "../../public/loc.svg";
 import myMarker from "../../public/myLoc.png";
 import routeMark from "../../public/routemark.png";
-import LocationDetailes from "./LocationDetailes";
 import toast from "react-hot-toast";
+import ServiceDetailes from "./ServiceDetails";
 
-const Map = ({ location, nearbyServices }) => {
+const Map = ({ location, nearbyServices, setLocationData, toggleSidebar }) => {
   if (!location) {
     return null; // Render nothing if location is not available
   }
@@ -53,19 +53,20 @@ const Map = ({ location, nearbyServices }) => {
       />
       {nearbyServices
         ? Array.isArray(nearbyServices) &&
-          nearbyServices.map((locationData, index) => (
+          nearbyServices.map((serviceInfo, index) => (
             <Marker
               key={index}
               position={[
-                locationData.geometry.coordinates[1],
-                locationData.geometry.coordinates[0],
+                serviceInfo.geometry.coordinates[1],
+                serviceInfo.geometry.coordinates[0],
               ]}
               icon={serviceLoc}
             >
               <Popup>
-                <LocationDetailes
-                  locationData={locationData}
-                  //handleLocationID={handleLocationID}
+                <ServiceDetailes
+                  serviceInfo={serviceInfo.properties}
+                  setLocationData={setLocationData}
+                  toggleSidebar={toggleSidebar}
                 />
               </Popup>
             </Marker>

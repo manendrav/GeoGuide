@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-
-import Search from "../Search";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import { FaUserPlus } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
 import { FaPhoneAlt } from "react-icons/fa";
-import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
 import { CgMenuRight } from "react-icons/cg";
+import { Sidebar } from "./Sidebar";
+import Search from "../Search";
 
 const navLinks = [
   { id: 1, name: "Home", path: "/", icons: <AiFillHome /> },
@@ -25,8 +24,6 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log(isOpen);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -59,26 +56,7 @@ export default function Navbar() {
         </div>
 
         {/* Sidebar coming from the right */}
-        <aside
-          className={`fixed top-0 right-0 w-[18vw] h-full z-10 bg-gray-50 text-black  transition-transform duration-300 ease-in-out transform ${
-            isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          {/* Close button */}
-          <div className="p-4 flex justify-between text-2xl items-center cursor-pointer">
-            <div>
-              <h3 className="font-semibold">Menu</h3>
-            </div>
-            <div className="px-4 flex justify-end  cursor-pointer">
-              <button
-                className="hover:bg-gray-200 text-2xl rounded-full p-2"
-                onClick={toggleSidebar}
-              >
-                <RxCross2 />
-              </button>
-            </div>
-          </div>
-
+        <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} title="Menu">
           {/* Sidebar content */}
           <nav className="flex flex-col px-4 space-y-2">
             {navLinks.map((link) => (
@@ -94,7 +72,7 @@ export default function Navbar() {
               </Link>
             ))}
           </nav>
-        </aside>
+        </Sidebar>
 
         {/* Overlay for closing sidebar */}
         {isOpen && <div className="fixed" onClick={toggleSidebar}></div>}
