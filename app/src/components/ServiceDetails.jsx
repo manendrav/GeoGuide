@@ -5,6 +5,8 @@ export default function ServiceDetailes({
   serviceInfo,
   setLocationData,
   toggleSidebar,
+  fetchRouteDetails,
+  closePopup,
 }) {
   const fetchLocationData = async (id) => {
     if (!id) return;
@@ -52,12 +54,26 @@ export default function ServiceDetailes({
         </ul>
       </div>
 
-      <Button
-        onClick={() => fetchLocationData(serviceInfo?.place_id)}
-        className="w-full my-3"
-      >
-        Know More
-      </Button>
+      <div className="flex w-full gap-3 my-2 p-2">
+        <Button
+          onClick={() => {fetchLocationData(serviceInfo?.place_id); closePopup();}}
+          className="w-full"
+        >
+          Know More
+        </Button>
+
+        <Button
+          onClick={() => {fetchRouteDetails({
+            end_lat: serviceInfo?.lat,
+            end_lon: serviceInfo?.lon,
+          })
+        closePopup();
+        }}
+          className="w-full"
+        >
+          Route
+        </Button>
+      </div>
     </div>
   );
 }

@@ -5,3 +5,4 @@ export const userlocation = `${host}/api/userlocation`;
 export const serviceCategory = (service) => `${host}/api/services/${service}`;
 export const locationDetails = (locationId) =>
   `${host}/api/service/details/${locationId}`;
+export const routeDetails = `${host}/api/service/route`;

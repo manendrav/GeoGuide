@@ -5,20 +5,33 @@ import UserLocationDetailes from "../components/UserLocationDetails";
 import { ServiceCategory } from "../components/ServiceCategory";
 import { Sidebar } from "../components/layout/Sidebar";
 import { LocationDetails } from "../components/LocationDetails";
+import { getRouteDetails } from "../services/locationService";
 
 export default function Explore() {
   const [loading, setLoading] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [nearbyServices, setNearbyServices] = useState(null);
   const [locationData, setLocationData] = useState([]);
+  const [routeData, setRouteData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log("Explore Page Location Data:", locationData);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log("Explore Page Nearby Services:", nearbyServices);
+  const fetchRouteDetails = async ({ end_lat, end_lon }) => {
+    const payload = {
+      start_lat: userLocation.latitude,
+      start_lon: userLocation.longitude,
+      end_lat: end_lat,
+      end_lon: end_lon,
+    };
+
+    if (isOpen == true) toggleSidebar();
+
+    const data = await getRouteDetails(payload);
+    setRouteData(data);
+  };
 
   //* ---------> Fetch User from Local Storage <--------- *//
   useEffect(() => {
@@ -95,6 +108,8 @@ export default function Explore() {
                 nearbyServices={nearbyServices}
                 setLocationData={setLocationData}
                 toggleSidebar={toggleSidebar}
+                fetchRouteDetails={fetchRouteDetails}
+                routeData={routeData}
               />
             </div>
           </div>
@@ -112,7 +127,7 @@ export default function Explore() {
             title="Details"
           >
             {locationData && Object.keys(locationData).length > 0 ? (
-              <LocationDetails locationData={locationData[0].properties} />
+              <LocationDetails locationData={locationData[0].properties} fetchRouteDetails={fetchRouteDetails} />
             ) : (
               <div className="h-full flex items-center justify-center">
                 <span className="loader"></span>

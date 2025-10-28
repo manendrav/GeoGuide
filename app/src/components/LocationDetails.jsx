@@ -5,7 +5,7 @@ import { TbWheelchairOff } from "react-icons/tb";
 import Button from "./layout/Button";
 import { facilities } from "../data/categories";
 
-export const LocationDetails = ({ locationData }) => {
+export const LocationDetails = ({ locationData, fetchRouteDetails }) => {
   const facilitiesData = facilities;
 
   return (
@@ -112,7 +112,10 @@ export const LocationDetails = ({ locationData }) => {
       </div>
       <div className="py-5">
         <Button
-          // onClick={handleRouteCoordinates}
+          onClick={() => fetchRouteDetails({
+            end_lat: locationData?.lat,
+            end_lon: locationData?.lon,
+          })}
           className="w-full "
         >
           Route

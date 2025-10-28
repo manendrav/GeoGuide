@@ -4,6 +4,7 @@ import {
   userlocation,
   serviceCategory,
   locationDetails,
+  routeDetails,
 } from "../utils/APIRoutes";
 
 export const getUserLocationDetailes = async (payload) => {
@@ -35,3 +36,13 @@ export const getLocationDetails = async (locationId) => {
     toast.error(error.message);
   }
 };
+
+export const getRouteDetails = async (payload) => {
+  try {
+    const response = await axios.post(routeDetails, payload);
+    return response?.data;
+  } catch (error) {
+    console.error("Error occurred:", error);
+    toast.error(error.message);
+  }
+}

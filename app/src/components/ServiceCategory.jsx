@@ -38,8 +38,6 @@ export const ServiceCategory = ({ setNearbyServices, location }) => {
     }, 2000);
   }, [serviceCategory]);
 
-  console.log("Current service category:", serviceCategory);
-
   return (
     <nav className="flex justify-center px-2 text-sm font-medium">
       <div className="flex flex-wrap gap-3 justify-center py-2 rounded-md bg-violet-500 text-white w-[50%]">
