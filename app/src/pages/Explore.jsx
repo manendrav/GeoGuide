@@ -5,7 +5,11 @@ import UserLocationDetailes from "../components/UserLocationDetails";
 import { ServiceCategory } from "../components/ServiceCategory";
 import { Sidebar } from "../components/layout/Sidebar";
 import { LocationDetails } from "../components/LocationDetails";
-import { getRouteDetails } from "../services/locationService";
+import {
+  getRouteDetails,
+  getSearchedLocationDetails,
+} from "../services/locationService";
+import { useSearchParams } from "react-router-dom";
 
 export default function Explore() {
   const [loading, setLoading] = useState(false);
@@ -14,6 +18,10 @@ export default function Explore() {
   const [locationData, setLocationData] = useState([]);
   const [routeData, setRouteData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchedLocationData, setSearchedLocationData] = useState(null);
+
+  const [searchParams] = useSearchParams();
+  const searchedLocation = searchParams.get("search");
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -29,9 +37,38 @@ export default function Explore() {
 
     if (isOpen == true) toggleSidebar();
 
-    const data = await getRouteDetails(payload);
-    setRouteData(data);
+    try {
+      const data = await getRouteDetails(payload);
+      setRouteData(data);
+    } catch (error) {
+      console.error("Error fetching route details:", error);
+    }
   };
+
+  const fetchSearchedLocationData = async () => {
+    if (!searchedLocation?.trim()) return;
+    const payload = {
+      loc: searchedLocation,
+    };
+
+    try {
+      const response = await getSearchedLocationDetails(payload);
+      if (response) setSearchedLocationData(response);
+      setUserLocation({
+        latitude: response?.lat,
+        longitude: response?.lon,
+      });
+    } catch (error) {
+      console.error("Error fetching searched location details:", error);
+    }
+  };
+
+  console.log(nearbyServices);
+  
+
+  useEffect(() => {
+    fetchSearchedLocationData();
+  }, [searchedLocation]);
 
   //* ---------> Fetch User from Local Storage <--------- *//
   useEffect(() => {
@@ -88,7 +125,7 @@ export default function Explore() {
     };
 
     localStorage.setItem("geo-user", JSON.stringify(payload));
-  }, [userLocation]);
+  }, [userLocation === false]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -127,7 +164,10 @@ export default function Explore() {
             title="Details"
           >
             {locationData && Object.keys(locationData).length > 0 ? (
-              <LocationDetails locationData={locationData[0].properties} fetchRouteDetails={fetchRouteDetails} />
+              <LocationDetails
+                locationData={locationData[0].properties}
+                fetchRouteDetails={fetchRouteDetails}
+              />
             ) : (
               <div className="h-full flex items-center justify-center">
                 <span className="loader"></span>

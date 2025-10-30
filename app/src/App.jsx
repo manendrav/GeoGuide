@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import Map from "./components/Map";
 
 function App() {
   const [contentLoaded, setContentLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setContentLoaded(true);
     }, 2000);
-
+    navigate("/", { replace: true });
     return () => clearTimeout(timeoutId);
   }, []);
 

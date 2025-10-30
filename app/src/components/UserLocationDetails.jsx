@@ -69,8 +69,9 @@ const UserLocationDetails = ({ location }) => {
             )}
           </>
         ) : (
-          <div className="h-full flex items-center justify-center">
+          <div className="h-full flex flex-col gap-3 items-center justify-center">
             <span className="loader"></span>
+            <p className="text-gray-500 font-semibold">Loading Details...</p>
           </div>
         )}
       </div>

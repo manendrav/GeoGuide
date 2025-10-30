@@ -1,147 +1,201 @@
-import React, { useState } from "react";
-import Button from "./layout/Button";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { SearchSuggestion } from "./SearchSuggestion";
+import { RxCross2 } from "react-icons/rx";
+import { getAddressSuggestions } from "../services/locationService";
 
-const Search = ({ handleSearch }) => {
-  const categories = [
-    "accommodation.hotel",
-    "accommodation.apartment",
-    "accommodation.chalet",
-    "accommodation.motel",
-    "airport",
-    "commercial.elektronics",
-    "commercial.vehicle",
-    "commercial.hobby",
-    "commercial.clothing",
-    "commercial.houseware_and_hardware",
-    "commercial.gas",
-    "commercial.weapons",
-    "catering.restaurant",
-    "catering.restaurant.indian",
-    "catering.restaurant.italian",
-    "catering.restaurant.mexican",
-    "catering.restaurant.japanese",
-    "catering.cafe",
-    "catering.cafe.coffee",
-    "religion",
-    "religion.place_of_worship",
-    "education",
-    "education.school",
-    "education.library",
-    "education.college",
-    "education.university",
-    "entertainment",
-    "entertainment.zoo",
-    "entertainment.aquarium	",
-    "entertainment.planetarium	",
-    "entertainment.museum	",
-    "entertainment.cinema",
-    "healthcare",
-    "healthcare.dentist	",
-    "healthcare.dentist.orthodontics",
-    "healthcare.hospital",
-    "healthcare.pharmacy",
-    "service",
-    "service.cleaning",
-    "service.cleaning.lavoir",
-    "service.cleaning.laundry",
-    "service.cleaning.dry_cleaning",
-    "tourism",
-    "tourism.information",
-    "tourism.sights",
-    "tourism.attraction",
-    "natural.water.sea",
-    "natural.mountain",
-    "natural.mountain.peak",
-    "office.government.ministry",
-    "office.government.healthcare",
-    "office.government.prosecutor",
-    "office.government.transportation",
-    "office.government.social_services",
-    "office.government.legislative",
-    "office.government.education",
-    // Add more categories as needed
-  ];
+const Search = () => {
+  const [search, setSearch] = useState(null);
+  const [searchedTerm, setSearchTerm] = useState(null);
+  const [User, setUser] = useState(null);
+  const [previousSearches, setPreviousSearches] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
-    setSearchTerm(event.target.value);
+    setSearch(event.target.value);
   };
 
-  const handleSelect = (category) => {
-    if (selectedCategories.length < 5) {
-      setSelectedCategories([...selectedCategories, category]);
-      setSearchTerm("");
-    } else {
-      toast("You can not add more categories   ", {
-        icon: "⚠️",
-      });
+  const getUserFromLocalStorage = () => {
+    const existingUser = JSON.parse(localStorage.getItem("geo-user"));
+    return existingUser;
+  };
+
+  const handleSearch = (searchTerm) => {
+    navigate(`/explore?search=${encodeURIComponent(searchTerm)}`);
+    // store searched location in local storage
+    const existingUser = getUserFromLocalStorage();
+    if (existingUser) {
+      const updatedSearchedLocations = existingUser.searchedLocations || [];
+      if (searchTerm && !updatedSearchedLocations.includes(searchTerm)) {
+        updatedSearchedLocations.push(searchTerm);
+        existingUser.searchedLocations = updatedSearchedLocations;
+        localStorage.setItem("geo-user", JSON.stringify(existingUser));
+      }
     }
   };
 
-  const handleRemove = (category) => {
-    setSelectedCategories(
-      selectedCategories.filter((item) => item !== category)
-    );
+  const handleOnfocus = () => {
+    const existingUser = getUserFromLocalStorage();
+    if (existingUser && existingUser.searchedLocations) {
+      setUser(existingUser);
+      setPreviousSearches(existingUser.searchedLocations);
+      setShowHistory(true);
+    }
   };
 
+  // handle if click on the history item
+  const handleHistoryItemClick = (location) => {
+    setShowHistory(false);
+    setShowSuggestions(false);
+    handleSearch(location);
+    setSearch("");
+  };
+
+  const handleDeleteSearch = (location) => {
+    if (!User) return;
+    const updatedLocations = User.searchedLocations.filter(
+      (loc) => loc !== location
+    );
+    const updatedUser = { ...User, searchedLocations: updatedLocations };
+    setUser(updatedUser);
+    setPreviousSearches(updatedLocations);
+    localStorage.setItem("geo-user", JSON.stringify(updatedUser));
+    if (updatedLocations.length === 0) {
+      setShowHistory(false);
+    }
+  };
+
+  // handle suggestion
+  const fetchSuggestions = async () => {
+    if (!searchedTerm) return;
+    const payload = { loc: searchedTerm };
+    try {
+      const suggestions = await getAddressSuggestions(payload);
+      setSuggestions(suggestions);
+      setShowSuggestions(true);
+    } catch (error) {
+      console.error("Error fetching address suggestions:", error);
+    }
+  };
+
+  useEffect(() => {
+    // it is called every time when
+    fetchSuggestions();
+    setShowHistory(false);
+  }, [searchedTerm]);
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSearch(searchedTerm);
+      // clear the search input after search
+      setSearch("");
+      setShowHistory(false);
+    } else if (event.key === "Escape") {
+      setShowHistory(false);
+    }
+  };
+
+  useEffect(() => {
+    // it called debouncing, means it will wait for 500ms after user stops typing
+    const timer = setTimeout(() => {
+      setSearchTerm(search);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [search]);
+
   return (
-      <div className="relative flex items-center rounded-md p-1 px-2 gap-3 w-[18vw] bg-white">
+    <div className="relative">
+      <div className="flex items-center rounded-md p-1 px-2 gap-3 w-[18vw] bg-white">
         <p>
           <FiSearch size="1.2em" />
         </p>
         <div className="flex gap-2 w-full">
-          {selectedCategories.map((category, index) => (
-            <span
-              key={index}
-              className="inline-flex items-center px-2 py-1 bg-purple-500 text-white rounded-md"
-            >
-              {category}
-              <button
-                className="ml-2 text-lg"
-                onClick={() => handleRemove(category)}
-              >
-                ×
-              </button>
-            </span>
-          ))}
-          
-            <input
-              type="search"
-              value={searchTerm}
-              className="rounded-md outline-none w-full bg-transparent text-gray-500"
-              onChange={handleChange}
-              placeholder="Type to search..."
-            />
-          
+          <input
+            type="search"
+            value={search || ""}
+            className="rounded-md outline-none w-full bg-transparent text-gray-500"
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onFocus={handleOnfocus}
+            onBlur={() => {
+              // Close suggestions when input loses focus (with slight delay to allow clicks)
+              setTimeout(() => {
+                setShowHistory(false);
+                setShowSuggestions(false);
+              }, 100);
+            }}
+            placeholder="Type to search..."
+          />
         </div>
+      </div>
 
-        {searchTerm && (
-          <div className="absolute bg-slate-50 z-[20] top-full left-0 w-full max-h-[20rem] overflow-y-auto shadow-md">
-            <div className="p-5">
-              <h1 className="font-semibold text-lg">Select Categories:</h1>
-              <ul className="px-3">
-                {categories
-                  .filter((category) =>
-                    category.toLowerCase().includes(searchTerm.toLowerCase())
-                  )
-                  .map((result, index) => (
-                    <li
-                      key={index}
-                      onClick={() => handleSelect(result)}
-                      className="cursor-pointer text-base hover:text-purple-600"
-                    >
-                      {result}
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </div>
+      {/* show previous searched locations */}
+      <div>
+        {showHistory && previousSearches.length > 0 && (
+          <SearchSuggestion title={"History"}>
+            {previousSearches
+              .slice(-5)
+              .reverse()
+              .map((location, index) => (
+                <div
+                  key={index}
+                  onMouseDown={() => handleHistoryItemClick(location)}
+                  className="flex justify-between items-center z-0 cursor-pointer hover:text-purple-600 hover:bg-gray-100 px-2 rounded-md"
+                >
+                  <li className="py-0.5">{location}</li>
+                  <p
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent triggering the parent click
+                      handleDeleteSearch(location);
+                    }}
+                    className="p-0.5 hover:text-red-600 z-10"
+                  >
+                    <RxCross2 />
+                  </p>
+                </div>
+              ))}
+          </SearchSuggestion>
         )}
       </div>
+
+      {/* show Location suggestions */}
+      <div>
+        {showSuggestions && suggestions?.length > 0 && (
+          <SearchSuggestion title={"Suggestions"}>
+            {suggestions?.map((suggestion, index) => (
+              <div
+                key={index}
+                onMouseDown={() =>
+                  handleHistoryItemClick(
+                    suggestion?.address_line1 +
+                      ", " +
+                      (suggestion?.county ? suggestion?.county : "")
+                  )
+                }
+                className="flex flex-col justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md"
+              >
+                <h1 className="font-semibold text-base text-black">
+                  {suggestion?.address_line1},{" "}
+                  {suggestion?.county ? suggestion?.county : ""}
+                </h1>
+                <h1 className="italic text-sm text-gray-500">
+                  {suggestion?.address_line2}
+                </h1>
+              </div>
+            ))}
+          </SearchSuggestion>
+        )}
+      </div>
+    </div>
   );
 };
 

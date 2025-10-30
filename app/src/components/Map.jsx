@@ -20,7 +20,7 @@ const Map = ({
   }
 
   const { latitude, longitude } = location || {};
-    const popupRef = useRef(null); 
+  const popupRef = useRef(null);
 
   // Render legs
   const renderLegs = () => {
@@ -87,72 +87,83 @@ const Map = ({
   };
 
   return (
-    <MapContainer
-      key={`${latitude}-${longitude}`} // Here why i use two time? -> MapContainer component doesn't automatically re-render when its center prop changes.
-      center={[latitude, longitude]}
-      zoom={16}
-      style={{ height: "100%", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution=""
-      />
-      {Array.isArray(nearbyServices) &&
-        nearbyServices.map((serviceInfo, index) => (
-          <Marker
-            key={index}
-            position={[
-              serviceInfo.geometry.coordinates[1],
-              serviceInfo.geometry.coordinates[0],
-            ]}
-            icon={serviceLoc}
-          >
-            <Popup ref={popupRef}>
-              <ServiceDetailes
-                serviceInfo={serviceInfo.properties}
-                setLocationData={setLocationData}
-                toggleSidebar={toggleSidebar}
-                fetchRouteDetails={fetchRouteDetails}
-                closePopup={handleClosePopup}
-              />
-            </Popup>
-          </Marker>
-        ))}
+    <>
+      {latitude && longitude ? (
+        <MapContainer
+          key={`${latitude}-${longitude}`} // Here why i use two time? -> MapContainer component doesn't automatically re-render when its center prop changes.
+          center={[latitude, longitude]}
+          zoom={16}
+          style={{ height: "100%", width: "100%" }}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution=""
+          />
+          {Array.isArray(nearbyServices) &&
+            nearbyServices.map((serviceInfo, index) => (
+              <Marker
+                key={index}
+                position={[
+                  serviceInfo.geometry.coordinates[1],
+                  serviceInfo.geometry.coordinates[0],
+                ]}
+                icon={serviceLoc}
+              >
+                <Popup ref={popupRef}>
+                  <ServiceDetailes
+                    serviceInfo={serviceInfo.properties}
+                    setLocationData={setLocationData}
+                    toggleSidebar={toggleSidebar}
+                    fetchRouteDetails={fetchRouteDetails}
+                    closePopup={handleClosePopup}
+                  />
+                </Popup>
+              </Marker>
+            ))}
 
-      <Marker position={[latitude, longitude]} icon={myIcon} />
+          {location && (
+            <Marker position={[latitude, longitude]} icon={myIcon} />
+          )}
 
-      {routeData && Object.keys(routeData).length > 0 && (
-        <GeoJSON
-          key={JSON.stringify(routeData)}
-          data={{
-            type: "FeatureCollection",
-            features: [
-              routeData,
-              ...renderLegs().features, // turn-by-turn points
-            ],
-          }}
-          style={() => ({
-            color: "#404be8",
-            weight: 7,
-          })}
-          pointToLayer={(feature, latlng) =>
-            L.circleMarker(latlng, turnByTurnMarkerStyle)
-          }
-          onEachFeature={(feature, layer) => {
-            if (feature.properties?.instruction)
-              layer.bindPopup(feature.properties.instruction);
-          }}
-        />
+          {routeData && Object.keys(routeData).length > 0 && (
+            <GeoJSON
+              key={JSON.stringify(routeData)}
+              data={{
+                type: "FeatureCollection",
+                features: [
+                  routeData,
+                  ...renderLegs().features, // turn-by-turn points
+                ],
+              }}
+              style={() => ({
+                color: "#404be8",
+                weight: 7,
+              })}
+              pointToLayer={(feature, latlng) =>
+                L.circleMarker(latlng, turnByTurnMarkerStyle)
+              }
+              onEachFeature={(feature, layer) => {
+                if (feature.properties?.instruction)
+                  layer.bindPopup(feature.properties.instruction);
+              }}
+            />
+          )}
+
+          {routeData?.properties?.waypoints?.map((waypoint, index) => (
+            <Marker
+              key={index}
+              position={[waypoint.location[1], waypoint.location[0]]}
+              icon={routeIcon}
+            />
+          ))}
+        </MapContainer>
+      ) : (
+        <div className="flex flex-col justify-center gap-3 items-center h-full w-full">
+          <span className="loader"></span>
+          <p className="text-gray-500 font-semibold">Loading map...</p>
+        </div>
       )}
-
-      {routeData?.properties?.waypoints?.map((waypoint, index) => (
-        <Marker
-          key={index}
-          position={[waypoint.location[1], waypoint.location[0]]}
-          icon={routeIcon}
-        />
-      ))}
-    </MapContainer>
+    </>
   );
 };
 
