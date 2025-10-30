@@ -50,7 +50,7 @@ func GetLocation(lat, lon float64) (*models.LocationResponse, error) {
 	apiKey := GetKey()
 
 	// Construct URL
-	URL := fmt.Sprintf("https://api.geoapify.com/v1/geocode/reverse?lat=%f&lon=%f&type=postcode&format=json&apiKey=%s", lat, lon, apiKey)
+	URL := fmt.Sprintf("https://api.geoapify.com/v1/geocode/reverse?lat=%f&lon=%f&format=json&apiKey=%s", lat, lon, apiKey)
 
 	// Make request
 	response, err := http.Get(URL)

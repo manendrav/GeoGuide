@@ -11,23 +11,25 @@ func SetupRoutes(app *fiber.App) {
 		return c.SendString("Server is running 🚀")
 	})
 
+	api := app.Group("/api")
+
 	// User Location
-	app.Post("/userlocation", handlers.GetUserLocationHandler)
+	api.Post("/userlocation", handlers.GetUserLocationHandler)
 
 	// Location info
-	app.Post("/searchedlocation", handlers.GetSearchedLocationHandler)
+	api.Post("/search/location", handlers.GetSearchedLocationHandler)
 
 	// autocomplete search
-	app.Post("/addressautocomplete", handlers.AddressAutocompleteHandler)
+	api.Post("/search/addressautocomplete", handlers.AddressAutocompleteHandler)
 
 	// Get nearby Services detailes 
-	app.Post("/services/:service", handlers.GetServicesHandler)
+	api.Post("/services/:service", handlers.GetServicesHandler)
 
 	// Get service detailes
-	app.Get("/service/details/:id", handlers.GetServiceDetailsHandler)
+	api.Get("/service/details/:id", handlers.GetServiceDetailsHandler)
 
 	// Get Turn-by-Turn navigation or Directions instructions
-	app.Post("/service/route", handlers.GetRouteHandler)
+	api.Post("/service/route", handlers.GetRouteHandler)
 }
 
 /* 
