@@ -23,7 +23,7 @@ function Login() {
   return (
     <div>
       {/* Signin form start here */}
-      <div className="mx-auto max-w-md p-10 rounded-lg bg-gray-50 mt-10">
+      <div className="mx-auto max-w-md p-10 rounded-lg bg-gray-50 mt-10 dark:bg-gray-800 dark:text-white">
         <div className="text-center">
           <h2 className="text-2xl font-bold  uppercase">Login</h2>
           <h4 className="mt-3 text-gray-400">
@@ -57,7 +57,7 @@ function Login() {
               />
             </div>
             <div className="flex items-center">
-              <Link className="ml-auto inline-block text-sm underline" href="#">
+              <Link className="ml-auto inline-block text-sm underline " href="#">
                 Forgot your password?
               </Link>
             </div>
@@ -65,9 +65,9 @@ function Login() {
               Login
             </Button>
           </form>
-          <div className="mt-7 text-center text-sm text-gray-600">
+          <div className="mt-7 text-center text-sm text-gray-600 dark:text-gray-300">
             Don't have an account?{" "}
-            <Link to="/signup" className="underline font-semibold">
+            <Link to="/signup" className="underline text-blue-600 font-semibold">
               Sign up
             </Link>
           </div>

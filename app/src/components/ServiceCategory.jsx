@@ -26,8 +26,6 @@ export const ServiceCategory = ({ setNearbyServices, location }) => {
 
     try {
       const result = await getNearbyServices(serviceCategory, payload);
-      console.log("Nearby Services:", result);
-      
       if (result) setNearbyServices(result);
     } catch (error) {
       console.error("Error fetching nearby services:", error);

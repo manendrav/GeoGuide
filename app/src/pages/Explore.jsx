@@ -63,9 +63,6 @@ export default function Explore() {
     }
   };
 
-  console.log(nearbyServices);
-  
-
   useEffect(() => {
     fetchSearchedLocationData();
   }, [searchedLocation]);

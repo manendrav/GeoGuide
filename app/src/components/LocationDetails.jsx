@@ -14,13 +14,13 @@ export const LocationDetails = ({ locationData, fetchRouteDetails }) => {
       <h1 className="text-2xl font-bold text-violet-500">
         {locationData?.address_line1}
       </h1>
-      <h3 className="italic text-sm text-gray-500">
+      <h3 className="italic text-sm text-gray-500 dark:text-gray-300">
         {locationData?.address_line2}
       </h3>
       <h1 className="text-base font-semibold">
         {locationData?.city}, {locationData?.state}
       </h1>
-      <h1 className="text-base">
+      <h1 className="text-base dark:text-gray-300">
         {" "}
         {locationData?.county}, {locationData?.country},{" "}
         <span className="uppercase">{locationData?.country_code}</span>

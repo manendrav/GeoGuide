@@ -16,10 +16,10 @@ function App() {
   }, []);
 
   return (
-    <div data-theme="light">
+    <div>
       {contentLoaded ? (
         <div className="bg-img">
-          <nav className="bg-gray-200">
+          <nav className="bg-gray-200 dark:bg-gray-900">
             <Navbar />
           </nav>
 
@@ -32,7 +32,7 @@ function App() {
           </footer>
         </div>
       ) : (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-screen bg-white dark:bg-gray-900">
           <div className="leap-frog">
             <div className="leap-frog__dot"></div>
             <div className="leap-frog__dot"></div>

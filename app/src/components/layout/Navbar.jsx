@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { MdOutlineTravelExplore } from "react-icons/md";
-import { CiLight } from "react-icons/ci";
 import { FaUserPlus } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -8,6 +7,7 @@ import { useState } from "react";
 import { CgMenuRight } from "react-icons/cg";
 import { Sidebar } from "./Sidebar";
 import Search from "../Search";
+import { Dark } from "./Dark";
 
 const navLinks = [
   { id: 1, name: "Home", path: "/", icons: <AiFillHome /> },
@@ -19,7 +19,6 @@ const navLinks = [
   },
   { id: 3, name: "Contact Us", path: "/contact", icons: <FaPhoneAlt /> },
   { id: 4, name: "Register", path: "/signup", icons: <FaUserPlus /> },
-  { id: 5, name: "Dark Mode", path: "", icons: <CiLight /> },
 ];
 
 export default function Navbar() {
@@ -35,7 +34,11 @@ export default function Navbar() {
       <div className="flex-1">
         <Link to={"/"}>
           <img
-            src="../geologo.png"
+            src={
+              document.documentElement.classList.contains("dark")
+                ? "/logo_dark.png"
+                : "/logo.png"
+            }
             width={120}
             className="text-xl font-semibold cursor-pointer"
           />
@@ -71,6 +74,7 @@ export default function Navbar() {
                 </p>
               </Link>
             ))}
+            <Dark />
           </nav>
         </Sidebar>
 

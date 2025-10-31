@@ -35,15 +35,15 @@ const UserLocationDetails = ({ location }) => {
   }, []);
 
   return (
-    <div className="userLoc absolute p-3 shadow-xl bg-white shadow-gray-500 z-[5] bottom-[2rem] min-[600px]:left-[7rem] min-[300px]:left-5 rounded-lg h-[25rem] w-[20rem] backdrop-blur-md">
-      <div className="h-full text-black backdrop-filter backdrop-blur-md backdrop-opacity-60 p-2 rounded-lg">
+    <div className="userLoc absolute p-3 shadow-xl bg-white shadow-gray-500 z-[5] bottom-[2rem] min-[600px]:left-[7rem] min-[300px]:left-5 rounded-lg h-[25rem] w-[20rem] backdrop-blur-md dark:bg-gray-700 dark:text-white">
+      <div className="h-full text-black backdrop-filter backdrop-blur-md backdrop-opacity-60 p-2 rounded-lg dark:text-white">
         {userLocationData ? (
           <>
             <h1 className="text-xl font-semibold">Welcome to, </h1>
             <h1 className="text-4xl font-bold text-purple-500 pb-1">
               {userLocationData.city}
             </h1>
-            <h1 className="text-sm font-semibold ml-1 text-gray-500">
+            <h1 className="text-sm font-semibold ml-1 text-gray-500 dark:text-gray-300">
               {" "}
               {userLocationData.state},{" "}
               <span className="font-bold">{userLocationData.country}</span>
@@ -52,7 +52,7 @@ const UserLocationDetails = ({ location }) => {
               {userLocationData.country_code}
             </h1>
             <h2 className="font-semibold">Location Details:</h2>
-            <div className="px-1 text-gray-500 text-sm font-semibold space-y-1">
+            <div className="px-1 text-gray-500 text-sm font-semibold space-y-1 dark:text-gray-200">
               <h2 className="text-sm font-semibold">
                 Current Location: {userLocationData.county}
               </h2>

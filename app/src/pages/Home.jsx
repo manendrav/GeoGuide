@@ -13,13 +13,14 @@ export default function Home() {
         <main className="flex-1">
           <section className="w-full py-6 flex justify-center">
             <div className="container px-4 md:px-6 ">
-              <div className="flex flex-col items-center md:flex-row min-[320px]:text-center min-[600px]:text-left gap-10 ">
-                <div className="tags">
+              <div className="flex flex-col justify-center items-center md:flex-row min-[320px]:text-center min-[600px]:text-left gap-10 ">
+                <div className="tags dark:text-gray-100">
                   <h1 className="text-4xl ml-3 font-bold tracking-wide sm:text-5xl xl:text-5xl/none">
                     Welcome to
                   </h1>
                   <h3 className="text-4xl font-bold tracking-normal sm:text-5xl xl:text-8xl/none">
-                    GEO-GUIDE
+                    Geo
+                    <span className="text-[#e463fd] font-shadows">Guide</span>
                   </h3>
                   <p className="max-w-[500px] ml-3 font-medium my-5 text-gray-600 md:text-lg/snug lg:text-base/snug xl:text-lg/snug dark:text-gray-400">
                     Unlock convenience at your fingertips. Discover nearby
@@ -46,16 +47,16 @@ export default function Home() {
 
           {/* features sectoins start*/}
           <section className="w-full px-10 py-10">
-            <div className="tag text-3xl text-center font-bold uppercase leading-4 tracking-wide">
+            <div className="tag text-3xl text-center font-bold uppercase leading-4 tracking-wide dark:text-gray-100">
               <h1>Features</h1>
             </div>
 
-            <div className="flex py-10 gap-10 min-[320px]:flex-col min-[746px]:flex-row  text-center">
-              <div className="flex flex-col items-center py-14 justify-center bg-white border rounded-xl shadow-xl p-6 hover:bg-[#bc76fd] text-gray-400 hover:text-white transition ease-in">
+            <div className="flex py-10 gap-10 min-[320px]:flex-col min-[746px]:flex-row text-center">
+              <div className="flex flex-col items-center py-14 justify-center bg-white border rounded-xl shadow-xl p-6 hover:bg-[#bc76fd] text-gray-400 hover:text-gray-200 transition ease-in dark:border-none dark:bg-gray-800">
                 <div className="text-4xl mb-4 bg-purple-400 text-white rounded-full p-3">
                   {<FaUsers size="0.9em" />}
                 </div>
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">
+                <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
                   Tailored Suggestions
                 </h2>
                 <p className="py-2 px-7 ">
@@ -65,11 +66,11 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="flex flex-col items-center py-14  justify-center bg-white border rounded-xl shadow-xl p-6 hover:bg-[#bc76fd]  text-gray-400 hover:text-white transition ease-in">
+              <div className="flex flex-col items-center py-14 justify-center bg-white border rounded-xl shadow-xl p-6 hover:bg-[#bc76fd] text-gray-400 hover:text-gray-200 transition ease-in dark:border-none dark:bg-gray-800">
                 <div className="text-4xl mb-4 bg-purple-400 text-white rounded-full p-3">
                   {<GoStarFill size="0.9em" />}
                 </div>
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">
+                <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
                   Reviews and Ratings
                 </h2>
                 <p className="py-2 px-5">
@@ -79,11 +80,11 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="flex flex-col items-center py-14  justify-center bg-white border rounded-xl shadow-xl p-6 hover:bg-[#bc76fd] text-gray-400 hover:text-white transition ease-in">
+              <div className="flex flex-col items-center py-14 justify-center bg-white border rounded-xl shadow-xl p-6 hover:bg-[#bc76fd] text-gray-400 hover:text-gray-200 transition ease-in dark:border-none dark:bg-gray-800">
                 <div className="text-4xl mb-4 bg-purple-400 text-white rounded-full p-3">
                   {<FaMapLocationDot size="0.9em" />}
                 </div>
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">
+                <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
                   Visual Integration
                 </h2>
                 <p className="py-2 px-5">
@@ -96,13 +97,13 @@ export default function Home() {
 
           {/* about section start  */}
           <section className="w-full mt-10  flex justify-center">
-            <div className="container flex flex-col items-center px-4 text-center gap-3  md:flex-row">
+            <div className="container flex flex-col items-center px-4 text-center md:flex-row">
               <div>
                 <img
                   alt="Image"
                   className="overflow-hidden rounded-xl object-cover object-center"
                   height="400"
-                  src="/img-2.webp"
+                  src="/about.svg"
                   width="700"
                   loading="lazy"
                 />
@@ -110,7 +111,7 @@ export default function Home() {
 
               <div className="grid gap-4 max-w-prose p-9 ">
                 <div className="space-y-2">
-                  <h2 className="text-2xl font-bold tracking-tighter sm:text-4xl">
+                  <h2 className="text-2xl font-bold tracking-tighter sm:text-4xl dark:text-gray-100">
                     ABOUT US
                   </h2>
                 </div>
@@ -134,7 +135,7 @@ export default function Home() {
             <div className="container space-y-12 px-4 md:px-6">
               <div className="space-y-2 text-center">
                 <div className="space-y-2 inline-block">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl dark:text-gray-100">
                     How It Works
                   </h2>
                 </div>
@@ -193,11 +194,11 @@ export default function Home() {
           {/* contact us section start here */}
           <section className="w-full flex justify-center">
             <div className="container px-4 py-5 md:px-6">
-              <h2 className="text-2xl font-bold text-center mb-10 uppercase tracking-wide2 sm:text-4xl">
+              <h2 className="text-2xl font-bold text-center mb-10 uppercase tracking-wide2 sm:text-4xl dark:text-gray-100">
                 Contact US
               </h2>
-              <div className="grid items-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
-                <div className="flex flex-col justify-center space-y-4">
+              <div className="flex gap-6 justify-center lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
+                <div className="flex flex-col justify-center space-y-4 ">
                   <div className="space-y-2 min-[320px]:text-center min-[700px]:text-left">
                     <h2 className="text-3xl ml-1 font-bold tracking-tighter sm:text-4xl">
                       We'd love to hear from you.
@@ -220,16 +221,19 @@ export default function Home() {
                       className="min-w-0 flex-auto rounded-lg border w-[20rem] bg-white/5 px-3.5 py-2 text-gray-400 shadow-sm focus:outline-purple-400 sm:text-sm sm:leading-6"
                       placeholder="Enter your email"
                     />
-                    <Button type="submit">Contact</Button>
+                    <Button type="submit">
+                      <a href="mailto:info@geoguide.com">Contact</a>
+                    </Button>
                   </div>
                 </div>
 
-                <div>
+                <div className="hidden h-[20rem] w-[25rem] lg:block">
                   <img
                     alt="Image"
-                    className="mx-auto overflow-hidden rounded-xl min-[320px]:w-full"
+                    style={{ mixBlendMode: "unset" }}
+                    className="mx-auto overflow-hidden w-[10px] rounded-xl min-[320px]:w-full"
                     loading="lazy"
-                    src="/contact.png"
+                    src="/contact.svg"
                     width="50"
                   />
                 </div>

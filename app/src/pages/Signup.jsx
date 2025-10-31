@@ -21,7 +21,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="mx-auto max-w-md p-10 rounded-lg bg-gray-50  my-10">
+    <div className="mx-auto max-w-md p-10 rounded-lg bg-gray-50 my-10 dark:bg-gray-800 dark:text-white">
       <div className="text-center">
         <h1 className="text-3xl font-bold">Create an Account</h1>
         <p className="text-gray-500  my-3">
@@ -76,7 +76,7 @@ export default function Signup() {
               id="terms"
               {...register("checkbox", { required: true })}
             />
-            <p className="leading-none my-3 text-gray-500" htmlFor="terms">
+            <p className="leading-none my-3 text-gray-500 dark:text-gray-400" htmlFor="terms">
               I agree to the{" "}
               <Link className="font-semibold"> terms and conditions</Link>
             </p>
@@ -86,9 +86,9 @@ export default function Signup() {
           Sign Up
         </Button>
       </form>
-      <p className="mt-10 text-center text-sm text-gray-600">
+      <p className="mt-10 text-center text-sm text-gray-600 dark:text-gray-300">
         Already have an account?
-        <Link to="/login" className="font-semibold leading-6 underline ">
+        <Link to="/login" className="font-semibold leading-6 text-blue-600 underline ">
           {" "}
           Sign in
         </Link>

@@ -113,16 +113,16 @@ const Search = () => {
   }, [search]);
 
   return (
-    <div className="relative">
-      <div className="flex items-center rounded-md p-1 px-2 gap-3 w-[18vw] bg-white">
+    <div className="relative ">
+      <div className="flex items-center rounded-md p-1 px-2 gap-3 w-[18vw] bg-white dark:bg-gray-700 dark:text-gray-200">
         <p>
           <FiSearch size="1.2em" />
         </p>
-        <div className="flex gap-2 w-full">
+        <div className="flex gap-2 w-full ">
           <input
             type="search"
             value={search || ""}
-            className="rounded-md outline-none w-full bg-transparent text-gray-500"
+            className="rounded-md outline-none w-full bg-transparent text-gray-500 dark:text-gray-200"
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onFocus={handleOnfocus}
@@ -149,7 +149,7 @@ const Search = () => {
                 <div
                   key={index}
                   onMouseDown={() => handleHistoryItemClick(location)}
-                  className="flex justify-between items-center z-0 cursor-pointer hover:text-purple-600 hover:bg-gray-100 px-2 rounded-md"
+                  className="flex justify-between items-center z-0 cursor-pointer hover:text-purple-600 hover:bg-gray-100 px-2 rounded-md dark:hover:bg-gray-800 dark:text-white"
                 >
                   <li className="py-0.5">{location}</li>
                   <p
@@ -181,13 +181,13 @@ const Search = () => {
                       (suggestion?.county ? suggestion?.county : "")
                   )
                 }
-                className="flex flex-col justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md"
+                className="flex flex-col justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md dark:hover:bg-gray-800 dark:text-white"
               >
-                <h1 className="font-semibold text-base text-black">
+                <h1 className="font-semibold text-base text-black dark:text-white">
                   {suggestion?.address_line1},{" "}
                   {suggestion?.county ? suggestion?.county : ""}
                 </h1>
-                <h1 className="italic text-sm text-gray-500">
+                <h1 className="italic text-sm text-gray-500 dark:text-gray-300">
                   {suggestion?.address_line2}
                 </h1>
               </div>
