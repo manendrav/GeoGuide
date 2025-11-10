@@ -57,7 +57,10 @@ function Login() {
               />
             </div>
             <div className="flex items-center">
-              <Link className="ml-auto inline-block text-sm underline " href="#">
+              <Link
+                className="ml-auto inline-block text-sm underline "
+                href="#"
+              >
                 Forgot your password?
               </Link>
             </div>
@@ -67,7 +70,10 @@ function Login() {
           </form>
           <div className="mt-7 text-center text-sm text-gray-600 dark:text-gray-300">
             Don't have an account?{" "}
-            <Link to="/signup" className="underline text-blue-600 font-semibold">
+            <Link
+              to="/signup"
+              className="underline text-blue-600 font-semibold"
+            >
               Sign up
             </Link>
           </div>

@@ -12,7 +12,7 @@ import {
 export const getUserLocationDetailes = async (payload) => {
   try {
     const response = await axios.post(userlocation, payload);
-    if(response?.data == null) {
+    if (response?.data == null) {
       toast.error("No Services Found!!!");
     }
     return response?.data;
@@ -25,7 +25,7 @@ export const getUserLocationDetailes = async (payload) => {
 export const getNearbyServices = async (service, payload) => {
   try {
     const response = await axios.post(serviceCategory(service), payload);
-    if(response?.data == null) {
+    if (response?.data == null) {
       toast.error("No Services Found!!!");
     }
     return response?.data;
@@ -38,7 +38,7 @@ export const getNearbyServices = async (service, payload) => {
 export const getLocationDetails = async (locationId) => {
   try {
     const response = await axios.get(locationDetails(locationId));
-    if(response?.data == null) {
+    if (response?.data == null) {
       toast.error("No Services Found!!!");
     }
     return response?.data;
@@ -51,7 +51,7 @@ export const getLocationDetails = async (locationId) => {
 export const getRouteDetails = async (payload) => {
   try {
     const response = await axios.post(routeDetails, payload);
-    if(response?.data == null) {
+    if (response?.data == null) {
       toast.error("No Services Found!!!");
     }
     return response?.data;
@@ -64,7 +64,7 @@ export const getRouteDetails = async (payload) => {
 export const getSearchedLocationDetails = async (payload) => {
   try {
     const response = await axios.post(searchedLocationDetails, payload);
-    if(response?.data == null) {
+    if (response?.data == null) {
       toast.error("No Services Found!!!");
     }
     return response?.data;
@@ -77,7 +77,7 @@ export const getSearchedLocationDetails = async (payload) => {
 export const getAddressSuggestions = async (payload) => {
   try {
     const response = await axios.post(addressAutocomplete, payload);
-    if(response?.data == null) {
+    if (response?.data == null) {
       toast.error("No Services Found!!!");
     }
     return response?.data;

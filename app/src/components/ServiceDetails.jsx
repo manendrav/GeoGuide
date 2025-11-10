@@ -56,19 +56,23 @@ export default function ServiceDetailes({
 
       <div className="flex w-full gap-3 my-2 p-2">
         <Button
-          onClick={() => {fetchLocationData(serviceInfo?.place_id); closePopup();}}
+          onClick={() => {
+            fetchLocationData(serviceInfo?.place_id);
+            closePopup();
+          }}
           className="w-full"
         >
           Know More
         </Button>
 
         <Button
-          onClick={() => {fetchRouteDetails({
-            end_lat: serviceInfo?.lat,
-            end_lon: serviceInfo?.lon,
-          })
-        closePopup();
-        }}
+          onClick={() => {
+            fetchRouteDetails({
+              end_lat: serviceInfo?.lat,
+              end_lon: serviceInfo?.lon,
+            });
+            closePopup();
+          }}
           className="w-full"
         >
           Route

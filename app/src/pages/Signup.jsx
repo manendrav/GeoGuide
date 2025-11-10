@@ -76,7 +76,10 @@ export default function Signup() {
               id="terms"
               {...register("checkbox", { required: true })}
             />
-            <p className="leading-none my-3 text-gray-500 dark:text-gray-400" htmlFor="terms">
+            <p
+              className="leading-none my-3 text-gray-500 dark:text-gray-400"
+              htmlFor="terms"
+            >
               I agree to the{" "}
               <Link className="font-semibold"> terms and conditions</Link>
             </p>
@@ -88,7 +91,10 @@ export default function Signup() {
       </form>
       <p className="mt-10 text-center text-sm text-gray-600 dark:text-gray-300">
         Already have an account?
-        <Link to="/login" className="font-semibold leading-6 text-blue-600 underline ">
+        <Link
+          to="/login"
+          className="font-semibold leading-6 text-blue-600 underline "
+        >
           {" "}
           Sign in
         </Link>

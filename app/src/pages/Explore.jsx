@@ -12,13 +12,11 @@ import {
 import { useSearchParams } from "react-router-dom";
 
 export default function Explore() {
-  const [loading, setLoading] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [nearbyServices, setNearbyServices] = useState(null);
   const [locationData, setLocationData] = useState([]);
   const [routeData, setRouteData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [searchedLocationData, setSearchedLocationData] = useState(null);
 
   const [searchParams] = useSearchParams();
   const searchedLocation = searchParams.get("search");
@@ -26,6 +24,8 @@ export default function Explore() {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  //* ---------> Fetch Step by Step Route details <--------- *//
 
   const fetchRouteDetails = async ({ end_lat, end_lon }) => {
     const payload = {
@@ -45,6 +45,8 @@ export default function Explore() {
     }
   };
 
+  //* ---------> Fetch Searched Location Response <--------- *//
+
   const fetchSearchedLocationData = async () => {
     if (!searchedLocation?.trim()) return;
     const payload = {
@@ -53,7 +55,6 @@ export default function Explore() {
 
     try {
       const response = await getSearchedLocationDetails(payload);
-      if (response) setSearchedLocationData(response);
       setUserLocation({
         latitude: response?.lat,
         longitude: response?.lon,

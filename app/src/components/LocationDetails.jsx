@@ -112,10 +112,12 @@ export const LocationDetails = ({ locationData, fetchRouteDetails }) => {
       </div>
       <div className="py-5">
         <Button
-          onClick={() => fetchRouteDetails({
-            end_lat: locationData?.lat,
-            end_lon: locationData?.lon,
-          })}
+          onClick={() =>
+            fetchRouteDetails({
+              end_lat: locationData?.lat,
+              end_lon: locationData?.lon,
+            })
+          }
           className="w-full "
         >
           Route
