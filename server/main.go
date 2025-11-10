@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/Manendrav/geoguide/routes"
 	"github.com/gofiber/fiber/v2"
@@ -21,7 +22,7 @@ func main() {
 
 	// Enable CORS
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000, http://localhost:5173", // your React app URL
+		AllowOrigins:     os.Getenv("CLIENT_ORIGIN"), // your React app URL
 		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowCredentials: true,
@@ -31,16 +32,12 @@ func main() {
 	routes.SetupRoutes(app)
 
 	// Start server
-	log.Fatal(app.Listen(":3000")) // log.Fatal is used to log the error if the server fails to start
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	if err := app.Listen(":" + port); err != nil {
+		log.Fatalf("failed to start: %v", err)
+	}
 }
-
-/*
-   How this application works:
-   Start -> main.go (initializes the server and routes)
-           -> routes/routes.go (defines the routes and links them to handlers)
-               -> handlers/location.go (handles the request, calls services)       // It sends data to service.go and gets a response
-               -> handlers/service.go (contains business logic, calls models if needed) //* API calls made here and response sent back to handler
-                   -> models/model.go (defines data structures)    // this is used in service.go to structure the response
-
-   Response flows back in reverse order.
-*/

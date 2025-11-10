@@ -105,7 +105,6 @@ func GetServicesHandler(c *fiber.Ctx) error {
 func GetServiceDetailsHandler(c *fiber.Ctx) error {
 	// get parameters
 	id := c.Params("id")
-	fmt.Println(id)
 
 	// call the service and send id
 	result, err := GetServiceDetails(id)

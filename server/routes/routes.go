@@ -6,7 +6,7 @@ import (
 )
 
 func SetupRoutes(app *fiber.App) {
-	// Health check
+	// Health check route
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Server is running 🚀")
 	})
@@ -22,7 +22,7 @@ func SetupRoutes(app *fiber.App) {
 	// autocomplete search
 	api.Post("/search/addressautocomplete", handlers.AddressAutocompleteHandler)
 
-	// Get nearby Services detailes 
+	// Get nearby Services detailes
 	api.Post("/services/:service", handlers.GetServicesHandler)
 
 	// Get service detailes
@@ -32,7 +32,7 @@ func SetupRoutes(app *fiber.App) {
 	api.Post("/service/route", handlers.GetRouteHandler)
 }
 
-/* 
+/*
 	-> User allow location permisions on frontend then we get {lat, lon} and send User Location from {/userLocation}
 
 	-> User can Enter any Location in search bar we get {loc} and send Location from {/location} send lat, lon of that location
