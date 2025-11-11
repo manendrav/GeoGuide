@@ -7,9 +7,10 @@
 - Responsive design for a seamless experience on various devices.
 
 ## Screenshots :camera:
-![Screenshot 2024-04-07 134445](https://github.com/Itz-Manu/GeoGuide/assets/142565220/3feb3d0e-b5d1-4cdc-97ee-63135f431e64)
+<img width="1877" height="901" alt="image" src="https://github.com/user-attachments/assets/08d8e02d-a9f7-46ea-a9ef-b705494686ee" />
 <br/>
-![Screenshot 2024-04-07 135819](https://github.com/Itz-Manu/GeoGuide/assets/142565220/e70cbc31-bb2f-4c62-8c65-db5985d1a1b1)
+<img width="1884" height="904" alt="image" src="https://github.com/user-attachments/assets/ddf00c76-e76f-419c-ae0e-0d8632fd361f" />
+
 
 
 
