@@ -32,7 +32,7 @@
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/Itz-Manu/GeoGuide.git
+  git clone https://github.com/manendrav/GeoGuide.git
   ```
 2. Change Directory
   ```bash
