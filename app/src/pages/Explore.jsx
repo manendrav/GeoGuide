@@ -18,8 +18,10 @@ export default function Explore() {
   const [routeData, setRouteData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  const [searchedLocation, setSearchedLocation] = useState(null);
+
   const [searchParams] = useSearchParams();
-  const searchedLocation = searchParams.get("search");
+  const searchedLocRequest = searchParams.get("search");
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -48,14 +50,14 @@ export default function Explore() {
   //* ---------> Fetch Searched Location Response <--------- *//
 
   const fetchSearchedLocationData = async () => {
-    if (!searchedLocation?.trim()) return;
+    if (!searchedLocRequest?.trim()) return;
     const payload = {
-      loc: searchedLocation,
+      loc: searchedLocRequest,
     };
 
     try {
       const response = await getSearchedLocationDetails(payload);
-      setUserLocation({
+      setSearchedLocation({
         latitude: response?.lat,
         longitude: response?.lon,
       });
@@ -66,7 +68,7 @@ export default function Explore() {
 
   useEffect(() => {
     fetchSearchedLocationData();
-  }, [searchedLocation]);
+  }, [searchedLocRequest]);
 
   //* ---------> Fetch User from Local Storage <--------- *//
   useEffect(() => {
@@ -132,6 +134,7 @@ export default function Explore() {
           <ServiceCategory
             setNearbyServices={setNearbyServices}
             location={userLocation}
+            searchedLocation={searchedLocation}
           />
         </div>
 
@@ -144,6 +147,7 @@ export default function Explore() {
                 setLocationData={setLocationData}
                 toggleSidebar={toggleSidebar}
                 fetchRouteDetails={fetchRouteDetails}
+                searchedLocation={searchedLocation}
                 routeData={routeData}
               />
             </div>

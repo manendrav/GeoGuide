@@ -4,6 +4,7 @@ import { Icon } from "leaflet";
 import serviceMarker from "../../public/loc.svg";
 import myMarker from "../../public/myLoc.png";
 import routeMark from "../../public/routemark.png";
+import searchLoc from "../../public/searchloc.png";
 import ServiceDetailes from "./ServiceDetails";
 import { useRef } from "react";
 
@@ -13,13 +14,14 @@ const Map = ({
   setLocationData,
   toggleSidebar,
   fetchRouteDetails,
+  searchedLocation,
   routeData,
 }) => {
   if (!location) {
     return null; // Render nothing if location is not available
   }
 
-  const { latitude, longitude } = location || {};
+  const { latitude, longitude } = location || searchedLocation || {};
   const popupRef = useRef(null);
 
   // Render legs
@@ -70,6 +72,11 @@ const Map = ({
     iconSize: [42, 42],
   });
 
+  const searchedLocIcon = new Icon({
+    iconUrl: searchLoc,
+    iconSize: [42, 42],
+  });
+
   const turnByTurnMarkerStyle = {
     radius: 8,
     fillColor: "white",
@@ -86,12 +93,16 @@ const Map = ({
     }
   };
 
+  // Determine the center coordinates - prefer searched location if available
+  const centerLat = searchedLocation?.latitude || latitude;
+  const centerLng = searchedLocation?.longitude || longitude;
+
   return (
     <>
       {latitude && longitude ? (
         <MapContainer
-          key={`${latitude}-${longitude}`} // Here why i use two time? -> MapContainer component doesn't automatically re-render when its center prop changes.
-          center={[latitude, longitude]}
+          key={`${centerLat}-${centerLng}-${searchedLocation ? 'searched' : 'user'}`} // Include searchedLocation in key to force re-render
+          center={[centerLat, centerLng]}
           zoom={16}
           style={{ height: "100%", width: "100%" }}
         >
@@ -123,6 +134,10 @@ const Map = ({
 
           {location && (
             <Marker position={[latitude, longitude]} icon={myIcon} />
+          )}
+
+          {searchedLocation && (
+            <Marker position={[searchedLocation.latitude, searchedLocation.longitude]} icon={searchedLocIcon} />
           )}
 
           {routeData && Object.keys(routeData).length > 0 && (

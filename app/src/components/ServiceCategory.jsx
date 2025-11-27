@@ -3,13 +3,8 @@ import { categories } from "../data/categories.jsx";
 import { Category } from "./Category";
 import { getNearbyServices } from "../services/locationService.js";
 
-export const ServiceCategory = ({ setNearbyServices, location }) => {
+export const ServiceCategory = ({ setNearbyServices, location, searchedLocation }) => {
   const [serviceCategory, setServiceCategory] = useState(null);
-
-  const payload = {
-    lat: location?.latitude,
-    lon: location?.longitude,
-  };
 
   if (!categories || categories.length === 0) {
     return null; // or some fallback UI
@@ -24,6 +19,15 @@ export const ServiceCategory = ({ setNearbyServices, location }) => {
   const fetchNearbyServices = async () => {
     if (!serviceCategory) return;
 
+    // Create payload with current location data - prioritize searched location
+    const payload = {
+      lat: searchedLocation?.latitude || location?.latitude,
+      lon: searchedLocation?.longitude || location?.longitude,
+    };
+
+    // Don't fetch if we don't have coordinates
+    if (!payload.lat || !payload.lon) return;
+
     try {
       const result = await getNearbyServices(serviceCategory, payload);
       if (result) setNearbyServices(result);
@@ -32,10 +36,21 @@ export const ServiceCategory = ({ setNearbyServices, location }) => {
     }
   };
 
+  // Clear services and reset category when location changes
   useEffect(() => {
-    setTimeout(() => {
-      fetchNearbyServices();
-    }, 2000);
+    if (location || searchedLocation) {
+      setNearbyServices([]); // Clear existing services
+      setServiceCategory(null); // Reset selected category
+    }
+  }, [location?.latitude, location?.longitude, searchedLocation?.latitude, searchedLocation?.longitude]);
+
+  // Only fetch services when user explicitly selects a category
+  useEffect(() => {
+    if (serviceCategory) {
+      setTimeout(() => {
+        fetchNearbyServices();
+      }, 2000);
+    }
   }, [serviceCategory]);
 
   return (
