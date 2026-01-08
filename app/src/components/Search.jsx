@@ -113,8 +113,8 @@ const Search = () => {
   }, [search]);
 
   return (
-    <div className="relative ">
-      <div className="flex items-center rounded-md p-1 px-2 gap-3 w-[18vw] bg-white dark:bg-gray-700 dark:text-gray-200">
+    <div className="relative w-full">
+      <div className="flex items-center rounded-md p-1 px-2 gap-3 bg-white dark:bg-gray-700 dark:text-gray-200">
         <p>
           <FiSearch size="1.2em" />
         </p>

@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 export const Sidebar = ({ children, isOpen, toggleSidebar, title }) => {
   return (
     <aside
-      className={`fixed top-0 right-0 w-[20rem] p-3 h-full z-10 bg-gray-50 text-black transition-transform duration-300 ease-in-out transform ${
+      className={`fixed top-0 right-0 w-[15rem] md:w-[17rem] lg:w-[20rem] p-3 h-full z-50 bg-gray-50 text-black transition-transform duration-300 ease-in-out transform ${
         isOpen ? "translate-x-0" : "translate-x-full"
       } dark:bg-gray-800 dark:text-white`}
     >

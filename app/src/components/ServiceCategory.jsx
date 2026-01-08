@@ -55,7 +55,7 @@ export const ServiceCategory = ({ setNearbyServices, location, searchedLocation 
 
   return (
     <nav className="flex justify-center px-2 text-sm font-medium">
-      <div className="flex flex-wrap gap-3 justify-center py-2 rounded-md bg-violet-500 text-white w-[50%]">
+      <div className="flex flex-nowrap gap-3 justify-start md:justify-center py-2 rounded-md bg-violet-500 text-white min-w-full lg:min-w-[50%] overflow-x-auto md:overflow-visible md:flex-wrap" style={{ overflowY: 'visible', WebkitOverflowScrolling: 'touch' }}>
         {categories.map(({ tip, category, icon }, index) => (
           <Category
             key={index}

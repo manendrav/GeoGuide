@@ -3,7 +3,7 @@ export const Category = ({ tip, category, icon, handleCategory }) => {
     <div
       data-tip={tip}
       onClick={() => handleCategory(category)}
-      className="tooltip tooltip-bottom flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all"
+      className="tooltip tooltip-bottom flex items-center justify-center cursor-pointer rounded-full hover:bg-violet-800 px-3 py-3 transition-all whitespace-nowrap"
     >
       <p>{icon}</p>
     </div>

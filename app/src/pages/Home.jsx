@@ -51,7 +51,7 @@ export default function Home() {
               <h1>Features</h1>
             </div>
 
-            <div className="flex py-10 gap-10 min-[320px]:flex-col min-[746px]:flex-row text-center">
+            <div className="flex py-10 gap-10 min-[320px]:flex-col min-[746px]:flex-row text-center md:gap-4 lg:gap-10">
               <div className="flex flex-col items-center py-14 justify-center bg-white border rounded-xl shadow-xl p-6 hover:bg-[#bc76fd] text-gray-400 hover:text-gray-200 transition ease-in dark:border-none dark:bg-gray-800">
                 <div className="text-4xl mb-4 bg-purple-400 text-white rounded-full p-3">
                   {<FaUsers size="0.9em" />}
@@ -96,15 +96,15 @@ export default function Home() {
           </section>
 
           {/* about section start  */}
-          <section className="w-full mt-10  flex justify-center">
+          <section className="w-full mt-10 flex justify-center">
             <div className="container flex flex-col items-center px-4 text-center md:flex-row">
-              <div>
+              <div className="hidden md:w-[160rem] md:block lg:w-2/5">
                 <img
                   alt="Image"
                   className="overflow-hidden rounded-xl object-cover object-center"
-                  height="400"
+                  height="700"
                   src="/about.svg"
-                  width="700"
+                  width="1000"
                   loading="lazy"
                 />
               </div>
@@ -115,7 +115,7 @@ export default function Home() {
                     ABOUT US
                   </h2>
                 </div>
-                <p className="text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400 px-12">
+                <p className="text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400 sm:leading-8 ">
                   Discover local services effortlessly. Our platform simplifies
                   your search, offering personalized recommendations and
                   intuitive tools for seamless exploration. Experience
@@ -193,13 +193,13 @@ export default function Home() {
 
           {/* contact us section start here */}
           <section className="w-full flex justify-center">
-            <div className="container px-4 py-5 md:px-6">
+            <div className="container p-4 py-5 md:px-6">
               <h2 className="text-2xl font-bold text-center mb-10 uppercase tracking-wide2 sm:text-4xl dark:text-gray-100">
                 Contact US
               </h2>
               <div className="flex gap-6 justify-center lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
                 <div className="flex flex-col justify-center space-y-4 ">
-                  <div className="space-y-2 min-[320px]:text-center min-[700px]:text-left">
+                  <div className="space-y-2 min-[320px]:text-center md:text-center lg:text-left">
                     <h2 className="text-3xl ml-1 font-bold tracking-tighter sm:text-4xl">
                       We'd love to hear from you.
                     </h2>
@@ -208,7 +208,7 @@ export default function Home() {
                       we'll get back to you as soon as possible.
                     </p>
                   </div>
-                  <div className="mt-6 flex max-w-md gap-x-4 px-2">
+                  <div className="mt-6 flex max-w-md gap-x-4 px-2 min-[320px]:flex-col md:flex-row md:mx-auto lg:mx-0">
                     <label htmlFor="email-address" className="sr-only">
                       Email address
                     </label>
@@ -218,12 +218,14 @@ export default function Home() {
                       type="email"
                       autoComplete="email"
                       required
-                      className="min-w-0 flex-auto rounded-lg border w-[20rem] bg-white/5 px-3.5 py-2 text-gray-400 shadow-sm focus:outline-purple-400 sm:text-sm sm:leading-6"
+                      className="min-w-0 flex-auto rounded-lg border w-[22rem] bg-white/5 px-3.5 py-2 text-gray-400 shadow-sm focus:outline-purple-400 sm:text-sm sm:leading-6"
                       placeholder="Enter your email"
                     />
-                    <Button type="submit">
-                      <a href="mailto:info@geoguide.com">Contact</a>
-                    </Button>
+                    <div className="mx-auto min-[320px]:mt-4 md:mt-0">
+                      <Button type="submit">
+                        <a href="mailto:info@geoguide.com">Contact</a>
+                      </Button>
+                    </div>
                   </div>
                 </div>
 

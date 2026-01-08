@@ -19,7 +19,7 @@ function App() {
     <div>
       {contentLoaded ? (
         <div className="bg-img">
-          <nav className="bg-gray-200 dark:bg-gray-900">
+          <nav className="bg-gray-100 dark:bg-gray-900">
             <Navbar />
           </nav>
 

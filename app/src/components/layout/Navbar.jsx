@@ -40,14 +40,14 @@ export default function Navbar() {
                 : "/logo.png"
             }
             width={120}
-            className="text-xl font-semibold cursor-pointer"
+            className="text-xl font-semibold cursor-pointer sm:ml-4 min-[320px]:w-20 md:w-28 lg:w-32"
           />
         </Link>
       </div>
 
       {/* Right part of navbar */}
       <div className="flex gap-3">
-        <form>
+        <form className="w-[20rem] min-[320px]:w-[12rem] md:w-[18rem] lg:w-[20rem]">
           <Search />
         </form>
 
