@@ -35,7 +35,7 @@ const UserLocationDetails = ({ location }) => {
   }, []);
 
   return (
-    <div className="userLoc absolute p-2 sm:p-3 shadow-xl bg-white shadow-gray-500 z-[5] bottom-[2rem] min-[600px]:left-[3rem] lg:bottom-[-5rem] min-[300px]:left-5 rounded-lg md:h-[22rem] h-[17rem] w-[13rem] md:w-[17rem] sm:w-[20rem] backdrop-blur-md dark:bg-gray-700 dark:text-white">
+    <div className="userLoc absolute p-2 sm:p-3 shadow-xl bg-white shadow-gray-500 z-[5] min-[600px]:left-[3rem] bottom-[-5rem] min-[300px]:left-5 rounded-lg w-[13rem] md:w-[17rem] sm:w-[20rem] backdrop-blur-md dark:bg-gray-700 dark:text-white">
       <div className="h-full text-black backdrop-filter backdrop-blur-md backdrop-opacity-60 p-1 sm:p-2 rounded-lg dark:text-white">
         {userLocationData ? (
           <>

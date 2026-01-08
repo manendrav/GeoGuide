@@ -218,7 +218,7 @@ export default function Home() {
                       type="email"
                       autoComplete="email"
                       required
-                      className="min-w-0 flex-auto rounded-lg border w-[22rem] bg-white/5 px-3.5 py-2 text-gray-400 shadow-sm focus:outline-purple-400 sm:text-sm sm:leading-6"
+                      className="min-w-0 flex-auto rounded-lg w-[22rem] bg-white/5 px-3.5 py-2 text-gray-400 shadow-sm focus:outline-purple-400 sm:text-sm sm:leading-6"
                       placeholder="Enter your email"
                     />
                     <div className="mx-auto min-[320px]:mt-4 md:mt-0">
